@@ -36,14 +36,32 @@ public:
         this->pricePerKM = pricePerKM;
         sqlite3 *DB;
         int exit = 0;
-        exit = sqlite3_open("./Database/Cars.db", &DB);
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
         if (exit)
         {
-            cerr << "Error open DB " << sqlite3_errmsg(DB) << endl;
-            cout << "Error Occurred...\nTry Again Later" << endl;
+            cerr << "Error Opening DB " << sqlite3_errmsg(DB) << endl;
+            cout << "Error Opening Database...\nTry Again Later" << endl;
             return;
         }
-        cout << "Opened Database Successfully!" << endl;
+        cout << "Database Opened Successfully!" << endl;
+        string sql = "CREATE TABLE IF NOT EXISTS CARS("
+                     "ID              INT        NOT NULL, "
+                     "CAPACITY        TEXT       NOT NULL, "
+                     "FUELTYPE        TEXT       NOT NULL, "
+                     "MILEAGE         INT        NOT NULL, "
+                     "CONDITION       CHAR(50), "
+                     "DRIVER          TEXT, "
+                     "ACCIDENTHISTORY TEXT,"
+                     "PRICEPERKM      REAL       NOT NULL );";
+        char *sqliteError;
+        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+        if (exit != SQLITE_OK)
+        {
+            cerr << "Error Creating Table" << sqlite3_errmsg(DB) << endl;
+            cout << "Error Creating Table...\nTry Again Later" << endl;
+            return;
+        }
+        cout << "Table Created Successfully..." << endl;
         sqlite3_close(DB);
     }
     void getCar()
