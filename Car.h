@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "sqlite/sqlite3.h"
 
 using namespace std;
 
@@ -33,6 +34,17 @@ public:
         this->driver = driver;
         this->accidentHistory = accidentHistory;
         this->pricePerKM = pricePerKM;
+        sqlite3 *DB;
+        int exit = 0;
+        exit = sqlite3_open("./Database/Cars.db", &DB);
+        if (exit)
+        {
+            cerr << "Error open DB " << sqlite3_errmsg(DB) << endl;
+            cout << "Error Occurred...\nTry Again Later" << endl;
+            return;
+        }
+        cout << "Opened Database Successfully!" << endl;
+        sqlite3_close(DB);
     }
     void getCar()
     {
