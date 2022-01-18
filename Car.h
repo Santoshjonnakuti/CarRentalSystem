@@ -8,21 +8,21 @@ class Car
 {
 
 private:
-    int id;
+    string id;
     string name;
     string company;
     string model;
     string number;
-    int seatingCapacity;
+    string seatingCapacity;
     string fuelType;
     string mileage;
     string condition;
     string driver;
     string accidentHistory;
-    float pricePerKM;
+    string pricePerKM;
 
 public:
-    void AddCar(string company, string model, string number, int seatingCapacity, string fuelType, string mileage, string condition, string driver, string accidentHistory, float pricePerKM)
+    void AddCar(string company, string model, string number, string seatingCapacity, string fuelType, string mileage, string condition, string driver, string accidentHistory, string pricePerKM)
     {
         this->company = company;
         this->model = model;
@@ -62,6 +62,16 @@ public:
             return;
         }
         cout << "Table Created Successfully..." << endl;
+        sql = "INSERT INTO CARS VALUES(" + to_string(1) + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
+        cout << sql << endl;
+        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+        if (exit != SQLITE_OK)
+        {
+            cerr << "Error Inserting into Table" << sqlite3_errmsg(DB) << endl;
+            cout << "Error Inserting into Table...\nTry Again Later" << endl;
+            return;
+        }
+        cout << "Insertion Successful..." << endl;
         sqlite3_close(DB);
     }
     void getCar()
