@@ -1,8 +1,11 @@
 #include <iostream>
-#include "Admin.h"
-#include "RegisteredUser.h"
-#include "GuestUser.h"
-#include "Car.h"
+#include <string.h>
+#include "Classes/Admin.h"
+#include "Classes/RegisteredUser.h"
+#include "Classes/GuestUser.h"
+#include "Classes/Car.h"
+#include "Utils/DataTypes.h"
+#include "Utils/AdminUtils.h"
 
 int main()
 {
@@ -10,7 +13,9 @@ int main()
     RegisteredUser R;
     GuestUser G;
     Car C;
-    int choice, adminChoice, ad = 1;
+    AdminDetails AD;
+    int choice;
+    Choice admin, registeredUser, guest;
     while (true)
     {
         cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Exit Application\n"
@@ -21,13 +26,20 @@ int main()
         {
         case 1:
             A.greet();
-            while (ad)
+            AD.name = "CarRentalAdmin";
+            cout << "Enter Username : ";
+            cin >> AD.userName;
+            cout << "Enter Password : ";
+            cin >> AD.password;
+            cout << AD.userName << AD.password << endl;
+            admin.LoggedIn = adminLogin(AD.userName, AD.password);
+            while (admin.LoggedIn)
             {
                 cout << "\n1. Add Car\n2. Get Car\n3. Logout\n"
                      << endl;
                 cout << "Enter your Choice : ";
-                cin >> adminChoice;
-                switch (adminChoice)
+                cin >> admin.choice;
+                switch (admin.choice)
                 {
                 case 1:
                     C.AddCar("Mahindra", "Xylo", "AP05 DA 2345", "7", "Diesel", "18", "Excellent", "Anand", "No", "12.60");
@@ -36,7 +48,7 @@ int main()
                     C.getCar();
                     break;
                 case 3:
-                    ad = 0;
+                    admin.LoggedIn = 0;
                     break;
                 default:
                     break;
