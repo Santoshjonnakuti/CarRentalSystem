@@ -31,7 +31,7 @@ int main()
             cin >> AD.userName;
             cout << "Enter Password : ";
             cin >> AD.password;
-            cout << AD.userName << AD.password << endl;
+            // cout << AD.userName << AD.password << endl;
             admin.LoggedIn = adminLogin(AD.userName, AD.password);
             while (admin.LoggedIn)
             {

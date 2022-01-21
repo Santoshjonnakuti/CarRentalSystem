@@ -3,11 +3,17 @@
 #include <string.h>
 #include "../sqlite/sqlite3.h"
 
+using namespace std;
+
 int adminLoggedIn = 0;
 string userName, password;
 static int callback(void *data, int argc, char **argv, char **azColName)
 {
-    if (userName == argv[1] && password == argv[2])
+    const char *uname = userName.c_str();
+    const char *passwd = password.c_str();
+    cout << uname << " " << passwd << endl;
+    cout << argv[1] << " " << argv[2] << endl;
+    if (strcmp(uname, argv[1]) == 0 && strcmp(passwd, argv[2]) == 0)
     {
         cout << "Hello" << endl;
         adminLoggedIn = 1;
