@@ -6,31 +6,29 @@
 using namespace std;
 
 int adminLoggedIn = 0;
-string userName, password;
+string userName = "", password = "";
 static int callback(void *data, int argc, char **argv, char **azColName)
 {
-    const char *uname = userName.c_str();
-    const char *passwd = password.c_str();
-    cout << uname << " " << passwd << endl;
-    cout << argv[1] << " " << argv[2] << endl;
-    if (strcmp(uname, argv[1]) == 0 && strcmp(passwd, argv[2]) == 0)
+    string uname = string(argv[1]);
+    string passwd = string(argv[2]);
+    if (userName.compare(uname) == 0 && password.compare(passwd) == 0)
     {
         cout << "Hello" << endl;
         adminLoggedIn = 1;
     }
-    for (int i = 0; i < argc; i++)
-    {
+    // for (int i = 0; i < argc; i++)
+    // {
 
-        printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    }
+    //     printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+    // }
     printf("\n");
     return 0;
 }
 
-int adminLogin(string userName, string password)
+int adminLogin(string uN, string pD)
 {
-    userName = userName;
-    password = password;
+    userName = userName + uN;
+    password = password + pD;
     sqlite3 *DB;
     int exit = 0;
     char *sqliteError;
@@ -45,5 +43,5 @@ int adminLogin(string userName, string password)
     string sql = "SELECT * FROM ADMIN;";
     sqlite3_exec(DB, sql.c_str(), callback, 0, &sqliteError);
     sqlite3_close(DB);
-    return 0;
+    return adminLoggedIn;
 }
