@@ -1,3 +1,6 @@
+#ifndef DATATYPES_H
+#define DATATYPES_H
+
 #include <iostream>
 #include <string>
 
@@ -14,3 +17,5 @@ struct Choice
     int choice;
     int LoggedIn = 0;
 };
+
+#endif

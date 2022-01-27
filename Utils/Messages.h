@@ -1,21 +1,23 @@
+#ifndef MESSAGES_H
+#define MESSAGES_H
 #include <iostream>
 
-using namespace std;
-
-void printErrorMessage(string error)
+void printErrorMessage(string errorMessage)
 {
-    string err = "\033[1;31m" + error + "\033[0m\n";
-    cout << err << endl;
+    string error = "\033[1;31m" + errorMessage + "\033[0m\n";
+    cout << error << endl;
 }
 
 void printSuccessMessage(string successMessage)
 {
-    string sm = "\033[1;32m" + successMessage + "\033[0m\n";
-    cout << sm << endl;
+    string success = "\033[1;32m" + successMessage + "\033[0m\n";
+    cout << success << endl;
 }
 
-void printWarningMessage(string warning)
+void printWarningMessage(string warningMessage)
 {
-    string w = "\033[1;33m" + warning + "\033[0m\n";
-    cout << w << endl;
+    string warning = "\033[1;33m" + warningMessage + "\033[0m\n";
+    cout << warning << endl;
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef ADMIN_H
+#define ADMIN_H
+
 #include <iostream>
 #include <string>
 
@@ -17,3 +20,5 @@ public:
         cout << "Hello World from Admin" << endl;
     }
 };
+
+#endif

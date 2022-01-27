@@ -1,3 +1,6 @@
+#ifndef REGISTEREDUSER_H
+#define REGISTEREDUSER_H
+
 #include <iostream>
 #include <string>
 
@@ -17,3 +20,5 @@ public:
         cout << "Hello World from Registered User" << endl;
     }
 };
+
+#endif

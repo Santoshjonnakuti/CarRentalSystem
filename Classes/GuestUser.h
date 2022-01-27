@@ -1,3 +1,6 @@
+#ifndef GUESTUSER_H
+#define GUESTUSER_H
+
 #include <iostream>
 #include <string>
 
@@ -17,3 +20,4 @@ public:
         cout << "Hello World from GuestUser" << endl;
     }
 };
+#endif

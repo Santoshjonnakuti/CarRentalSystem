@@ -1,3 +1,6 @@
+#ifndef ADMINUTILS_H
+#define ADMINUTILS_H
+
 #include <iostream>
 #include <stdlib.h>
 #include <string>
@@ -44,3 +47,4 @@ int adminLogin(string uN, string pD)
     }
     return adminLoggedIn;
 }
+#endif
