@@ -20,4 +20,10 @@ void printWarningMessage(string warningMessage)
     cout << warning << endl;
 }
 
+void printInformation(string informationMessage)
+{
+    string information = "\033[1;34m" + informationMessage + "\033[0m\n";
+    cout << information << endl;
+}
+
 #endif

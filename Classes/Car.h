@@ -6,11 +6,20 @@
 #include "../sqlite/sqlite3.h"
 #include "../Utils/Messages.h"
 using namespace std;
+int i = 0;
+
+static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
+{
+    i = atoi(argv[0]);
+    cout << i + 1 << endl;
+    return i;
+}
 
 class Car
 {
 
 private:
+    int total_cars;
     string id;
     string name;
     string company;
@@ -25,8 +34,28 @@ private:
     string pricePerKM;
 
 public:
+    void getTotalCars()
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM NOOFCARS;";
+        sqlite3_exec(DB, sql.c_str(), getNoOfCars, 0, &sqliteError);
+        total_cars = i;
+        sqlite3_close(DB);
+        return;
+    }
     void AddCar(string company, string model, string number, string seatingCapacity, string fuelType, string mileage, string condition, string driver, string accidentHistory, string pricePerKM)
     {
+        getTotalCars();
+        this->id = to_string(total_cars + 1);
         this->company = company;
         this->model = model;
         this->number = number;
@@ -39,6 +68,7 @@ public:
         this->pricePerKM = pricePerKM;
         sqlite3 *DB;
         int exit = 0;
+        char *sqliteError;
         exit = sqlite3_open("./Database/DataBase.db", &DB);
         if (exit)
         {
@@ -55,7 +85,6 @@ public:
                      "DRIVER          TEXT, "
                      "ACCIDENTHISTORY TEXT,"
                      "PRICEPERKM      REAL       NOT NULL );";
-        char *sqliteError;
         exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         if (exit != SQLITE_OK)
         {
@@ -65,8 +94,7 @@ public:
         }
         printSuccessMessage("\nTable Created Successfully...!\n");
 
-        sql = "INSERT INTO CARS VALUES(" + to_string(1) + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
-        cout << sql << endl;
+        sql = "INSERT INTO CARS VALUES(" + this->id + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
         exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         if (exit != SQLITE_OK)
         {
@@ -74,19 +102,13 @@ public:
             return;
         }
         printSuccessMessage("\nInsertion Successful...\n");
+        sql = "UPDATE NOOFCARS SET TOTAL_CARS=" + this->id + " WHERE TOTAL_CARS=" + to_string(i);
+        sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         sqlite3_close(DB);
     }
     void getCar()
     {
-        cout << "--------------------------Car Details-----------------------------------" << endl;
-        cout << "Car Name            : " << company + " " + model + " " + number << endl;
-        cout << "Car Capacity        : " << seatingCapacity << endl;
-        cout << "Car FuelType        : " << fuelType << endl;
-        cout << "Car Mileage         : " << mileage << endl;
-        cout << "Car Condition       : " << condition << endl;
-        cout << "Car Driver          : " << driver << endl;
-        cout << "Car AccidentHistory : " << accidentHistory << endl;
-        cout << "Car PriccePerKM     : " << pricePerKM << endl;
+        printInformation("--------------------------Car Details-----------------------------------\nCar Name            : " + company + " " + model + " " + number + "\nCar Capacity        : " + seatingCapacity + "\nCar FuelType        : " + fuelType + "\nCar Mileage         : " + mileage + "\nCar Condition       : " + condition + "\nCar Driver          : " + driver + "\nCar AccidentHistory : " + accidentHistory + "\nCar PriccePerKM     : " + pricePerKM + "\n");
     }
 };
 #endif
