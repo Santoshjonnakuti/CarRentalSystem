@@ -14,7 +14,11 @@ static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
     cout << i + 1 << endl;
     return i;
 }
-
+static int getCarDetails(void *data, int argc, char **argv, char **azColName)
+{
+    printInformation("--------------------------Car Details-----------------------------------\nCar Name            : " + string("company") + " " + "model" + " " + "number" + "\nCar Capacity        : " + argv[1] + "\nCar FuelType        : " + argv[2] + "\nCar Mileage         : " + argv[3] + "\nCar Condition       : " + argv[4] + "\nCar Driver          : " + argv[5] + "\nCar AccidentHistory : " + argv[6] + "\nCar PriccePerKM     : " + argv[7] + "\n");
+    return 0;
+}
 class Car
 {
 
@@ -106,9 +110,21 @@ public:
         sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         sqlite3_close(DB);
     }
-    void getCar()
+    void getCar(int car_id)
     {
-        printInformation("--------------------------Car Details-----------------------------------\nCar Name            : " + company + " " + model + " " + number + "\nCar Capacity        : " + seatingCapacity + "\nCar FuelType        : " + fuelType + "\nCar Mileage         : " + mileage + "\nCar Condition       : " + condition + "\nCar Driver          : " + driver + "\nCar AccidentHistory : " + accidentHistory + "\nCar PriccePerKM     : " + pricePerKM + "\n");
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM CARS WHERE ID=" + to_string(car_id);
+        sqlite3_exec(DB, sql.c_str(), getCarDetails, 0, &sqliteError);
+        sqlite3_close(DB);
     }
 };
 #endif

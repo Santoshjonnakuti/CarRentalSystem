@@ -16,7 +16,7 @@ int main()
     GuestUser G;
     Car C;
     AdminDetails AD;
-    int choice;
+    int choice, car_id;
     Choice admin, registeredUser, guest;
     while (true)
     {
@@ -46,12 +46,15 @@ int main()
                     C.AddCar("Mahindra", "Xylo", "AP05 DA 2345", "7", "Diesel", "18", "Excellent", "Anand", "No", "12.60");
                     break;
                 case 2:
-                    C.getCar();
+                    cout << "\nEnter the Id of the Car : ";
+                    cin >> car_id;
+                    C.getCar(car_id);
                     break;
                 case 3:
                     admin.LoggedIn = 0;
                     break;
                 default:
+                    cout << "\nInvalid Choice\n";
                     break;
                 }
             }
