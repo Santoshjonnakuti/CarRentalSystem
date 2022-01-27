@@ -1,7 +1,9 @@
 #include <iostream>
+#include <stdlib.h>
 #include <string>
 #include <string.h>
 #include "../sqlite/sqlite3.h"
+#include "Messages.h"
 
 using namespace std;
 
@@ -13,15 +15,9 @@ static int callback(void *data, int argc, char **argv, char **azColName)
     string passwd = string(argv[2]);
     if (userName.compare(uname) == 0 && password.compare(passwd) == 0)
     {
-        cout << "Hello" << endl;
+        printSuccessMessage("\nLoggedin as Admin...\n");
         adminLoggedIn = 1;
     }
-    // for (int i = 0; i < argc; i++)
-    // {
-
-    //     printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-    // }
-    printf("\n");
     return 0;
 }
 
@@ -35,13 +31,16 @@ int adminLogin(string uN, string pD)
     exit = sqlite3_open("./Database/DataBase.db", &DB);
     if (exit)
     {
-        cerr << "Error Opening DB " << sqlite3_errmsg(DB) << endl;
-        cout << "Error Opening Database...\nTry Again Later" << endl;
+        printErrorMessage("\nError Opening Database...\nTry Again Later\n");
         return 0;
     }
-    cout << "Database Opened Successfully!" << endl;
+    printSuccessMessage("\nDatabase Opened Successfully!\n");
     string sql = "SELECT * FROM ADMIN;";
     sqlite3_exec(DB, sql.c_str(), callback, 0, &sqliteError);
     sqlite3_close(DB);
+    if (!adminLoggedIn)
+    {
+        printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
+    }
     return adminLoggedIn;
 }

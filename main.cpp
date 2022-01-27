@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <unistd.h>
 #include "Classes/Admin.h"
 #include "Classes/RegisteredUser.h"
 #include "Classes/GuestUser.h"
@@ -9,6 +10,7 @@
 
 int main()
 {
+
     Admin A;
     RegisteredUser R;
     GuestUser G;
