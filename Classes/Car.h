@@ -11,7 +11,6 @@ int i = 0;
 static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
 {
     i = atoi(argv[0]);
-    cout << i + 1 << endl;
     return i;
 }
 static int getCarDetails(void *data, int argc, char **argv, char **azColName)
@@ -112,6 +111,7 @@ public:
     }
     void getCar(int car_id)
     {
+        getTotalCars();
         sqlite3 *DB;
         int exit = 0;
         char *sqliteError;
@@ -122,6 +122,12 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
+        if (total_cars < car_id)
+        {
+            printErrorMessage("\nInvalid Car Id...\nUnable to Fetch Details...\n");
+            sqlite3_close(DB);
+            return;
+        }
         string sql = "SELECT * FROM CARS WHERE ID=" + to_string(car_id);
         sqlite3_exec(DB, sql.c_str(), getCarDetails, 0, &sqliteError);
         sqlite3_close(DB);
