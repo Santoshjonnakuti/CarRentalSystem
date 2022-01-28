@@ -7,6 +7,7 @@
 #include "Classes/Car.h"
 #include "Utils/DataTypes.h"
 #include "Utils/AdminUtils.h"
+#include "Utils/Messages.h"
 
 int main()
 {
@@ -16,7 +17,7 @@ int main()
     GuestUser G;
     Car C;
     AdminDetails AD;
-    int choice, car_id;
+    int choice, car_id, updateChoice;
     Choice admin, registeredUser, guest;
     CarDataType CarDetails;
     while (true)
@@ -37,7 +38,7 @@ int main()
             admin.LoggedIn = adminLogin(AD.userName, AD.password);
             while (admin.LoggedIn)
             {
-                cout << "\n1. Add Car\n2. Get Car\n3. Logout\n"
+                cout << "\n1. Add New Car\n2. Get Car Details\n3. Update Car Details\n4. Logout\n"
                      << endl;
                 cout << "Enter your Choice : ";
                 cin >> admin.choice;
@@ -64,7 +65,7 @@ int main()
                     cin >> CarDetails.accidentHistory;
                     cout << "Enter Car Price Per KM : ";
                     cin >> CarDetails.pricePerKM;
-                    C.AddCar(CarDetails);
+                    C.AddNewCar(CarDetails);
                     break;
                 case 2:
                     cout << "\nEnter the Id of the Car : ";
@@ -72,10 +73,18 @@ int main()
                     C.getCar(car_id);
                     break;
                 case 3:
+                    printInformation("\nChoose the Detail you want to Update :\n1.Name\n2.Capacity\n3.Fuel type\n4.Mileage\n5.Condition\n6.Driver\n7.Accident Hisotry\n8.Price Per KM");
+                    cout << "Enter your Choice : ";
+                    cin >> updateChoice;
+                    cout << "\nEnter the Id of the Car : ";
+                    cin >> car_id;
+                    C.updateCar(updateChoice, to_string(car_id));
+                    break;
+                case 4:
                     admin.LoggedIn = 0;
                     break;
                 default:
-                    cout << "\nInvalid Choice\n";
+                    printErrorMessage("\nInvalid Choice\n");
                     break;
                 }
             }

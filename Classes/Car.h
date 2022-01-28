@@ -6,6 +6,8 @@
 #include "../sqlite/sqlite3.h"
 #include "../Utils/Messages.h"
 #include "../Utils/DataTypes.h"
+#include "../Database/DataBaseUtils.h"
+
 using namespace std;
 int i = 0;
 
@@ -56,7 +58,7 @@ public:
         sqlite3_close(DB);
         return;
     }
-    void AddCar(CarDataType CarDetails)
+    void AddNewCar(CarDataType CarDetails)
     {
         getTotalCars();
         this->id = to_string(total_cars + 1);
@@ -114,6 +116,62 @@ public:
         string sql = "SELECT * FROM CARS WHERE ID=" + to_string(car_id);
         sqlite3_exec(DB, sql.c_str(), getCarDetails, 0, &sqliteError);
         sqlite3_close(DB);
+    }
+    void updateCar(int choice, string car_id)
+    {
+        string newCompany, newModel, newNumber, newName;
+        string newCapacity, newFuelType, newMileage, newCondition, newDriver, newAccidentHistory, newPricePerKM;
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter Car Company : ";
+            cin >> newCompany;
+            cout << "Enter Car Model : ";
+            cin >> newModel;
+            cout << "Enter Car Number : ";
+            cin.ignore();
+            getline(cin, newNumber);
+            newName = newCompany + " " + newModel + " " + newNumber;
+            updateCarName(car_id, newName);
+            break;
+        case 2:
+            cout << "Enter Car Seating Capacity : ";
+            cin >> newCapacity;
+            updateCarCapacity(car_id, newCapacity);
+            break;
+        case 3:
+            cout << "Enter Car Fuel Type : ";
+            cin >> newFuelType;
+            updateCarFuelType(car_id, newFuelType);
+            break;
+        case 4:
+            cout << "Enter Car Mileage : ";
+            cin >> newMileage;
+            updateCarMileage(car_id, newMileage);
+            break;
+        case 5:
+            cout << "Enter Car Condition : ";
+            cin >> newCondition;
+            updateCarCondition(car_id, newCondition);
+            break;
+        case 6:
+            cout << "Enter Car Driver : ";
+            cin >> newDriver;
+            updateCarDriver(car_id, newDriver);
+            break;
+        case 7:
+            cout << "Enter Car Accident History [Yes/No]: ";
+            cin >> newAccidentHistory;
+            updateCarAccidentHistory(car_id, newAccidentHistory);
+            break;
+        case 8:
+            cout << "Enter Car Price Per KM : ";
+            cin >> newPricePerKM;
+            updateCarPricePerKM(car_id, newPricePerKM);
+            break;
+        default:
+            break;
+        }
     }
 };
 #endif
