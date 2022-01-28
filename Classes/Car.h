@@ -5,6 +5,7 @@
 #include <string>
 #include "../sqlite/sqlite3.h"
 #include "../Utils/Messages.h"
+#include "../Utils/DataTypes.h"
 using namespace std;
 int i = 0;
 
@@ -15,7 +16,7 @@ static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
 }
 static int getCarDetails(void *data, int argc, char **argv, char **azColName)
 {
-    printInformation("--------------------------Car Details-----------------------------------\nCar Name            : " + string("company") + " " + "model" + " " + "number" + "\nCar Capacity        : " + argv[1] + "\nCar FuelType        : " + argv[2] + "\nCar Mileage         : " + argv[3] + "\nCar Condition       : " + argv[4] + "\nCar Driver          : " + argv[5] + "\nCar AccidentHistory : " + argv[6] + "\nCar PriccePerKM     : " + argv[7] + "\n");
+    printCarDetails(argv);
     return 0;
 }
 class Car
@@ -55,20 +56,20 @@ public:
         sqlite3_close(DB);
         return;
     }
-    void AddCar(string company, string model, string number, string seatingCapacity, string fuelType, string mileage, string condition, string driver, string accidentHistory, string pricePerKM)
+    void AddCar(CarDataType CarDetails)
     {
         getTotalCars();
         this->id = to_string(total_cars + 1);
-        this->company = company;
-        this->model = model;
-        this->number = number;
-        this->seatingCapacity = seatingCapacity;
-        this->fuelType = fuelType;
-        this->mileage = mileage;
-        this->condition = condition;
-        this->driver = driver;
-        this->accidentHistory = accidentHistory;
-        this->pricePerKM = pricePerKM;
+        this->company = CarDetails.company;
+        this->model = CarDetails.model;
+        this->number = CarDetails.number;
+        this->seatingCapacity = CarDetails.seatingCapacity;
+        this->fuelType = CarDetails.fuelType;
+        this->mileage = CarDetails.mileage;
+        this->condition = CarDetails.condition;
+        this->driver = CarDetails.driver;
+        this->accidentHistory = CarDetails.accidentHistory;
+        this->pricePerKM = CarDetails.pricePerKM;
         sqlite3 *DB;
         int exit = 0;
         char *sqliteError;
@@ -79,25 +80,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "CREATE TABLE IF NOT EXISTS CARS("
-                     "ID              INT        NOT NULL, "
-                     "CAPACITY        TEXT       NOT NULL, "
-                     "FUELTYPE        TEXT       NOT NULL, "
-                     "MILEAGE         INT        NOT NULL, "
-                     "CONDITION       CHAR(50), "
-                     "DRIVER          TEXT, "
-                     "ACCIDENTHISTORY TEXT,"
-                     "PRICEPERKM      REAL       NOT NULL );";
-        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
-        if (exit != SQLITE_OK)
-        {
-            printErrorMessage("\nError Creating Table...\nTry Again Later\n");
-
-            return;
-        }
-        printSuccessMessage("\nTable Created Successfully...!\n");
-
-        sql = "INSERT INTO CARS VALUES(" + this->id + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
+        string sql = "INSERT INTO CARS VALUES('" + this->company + " " + this->model + " " + this->number + "', " + this->id + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
         exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         if (exit != SQLITE_OK)
         {
@@ -122,7 +105,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        if (total_cars < car_id)
+        if (total_cars < car_id || car_id <= 0)
         {
             printErrorMessage("\nInvalid Car Id...\nUnable to Fetch Details...\n");
             sqlite3_close(DB);

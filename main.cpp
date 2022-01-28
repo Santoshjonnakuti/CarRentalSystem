@@ -18,6 +18,7 @@ int main()
     AdminDetails AD;
     int choice, car_id;
     Choice admin, registeredUser, guest;
+    CarDataType CarDetails;
     while (true)
     {
         cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Exit Application\n"
@@ -43,7 +44,27 @@ int main()
                 switch (admin.choice)
                 {
                 case 1:
-                    C.AddCar("Mahindra", "Xylo", "AP05 DA 2345", "7", "Diesel", "18", "Excellent", "Anand", "No", "12.60");
+                    cout << "Enter Car Company : ";
+                    getline(cin, CarDetails.company);
+                    cout << "Enter Car Model : ";
+                    getline(cin, CarDetails.model);
+                    cout << "Enter Car Number : ";
+                    getline(cin, CarDetails.number);
+                    cout << "Enter Car Seating Capacity";
+                    cin >> CarDetails.seatingCapacity;
+                    cout << "Enter Car Fuel Type : ";
+                    getline(cin, CarDetails.fuelType);
+                    cout << "Enter Car Mileage : ";
+                    cin >> CarDetails.mileage;
+                    cout << "Enter Car Condition : ";
+                    getline(cin, CarDetails.condition);
+                    cout << "Enter Car Driver Name : ";
+                    getline(cin, CarDetails.driver);
+                    cout << "Enter Car Accident History [Yes/No]: ";
+                    cin >> CarDetails.accidentHistory;
+                    cout << "Enter Car Price Per KM : ";
+                    cin >> CarDetails.pricePerKM;
+                    C.AddCar(CarDetails);
                     break;
                 case 2:
                     cout << "\nEnter the Id of the Car : ";
