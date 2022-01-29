@@ -31,5 +31,8 @@ struct CarDataType
     string driver;
     string accidentHistory;
     string pricePerKM;
+    string totalNoOfCars;
+    string noOfRentedCars;
+    string noOfAvailableCars;
 };
 #endif

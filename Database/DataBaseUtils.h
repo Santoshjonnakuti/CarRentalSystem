@@ -184,5 +184,71 @@ void updateCarPricePerKM(string car_id, string newPricePerKM)
     printErrorMessage("\nCannot Update Price Per KM...\nTry Again Later...\n");
     return;
 }
+void updateCarsTotal(string car_id, string newCarsTotal)
+{
+    sqlite3 *DB;
+    int exit = 0;
+    char *sqliteError;
+    exit = sqlite3_open("./Database/DataBase.db", &DB);
+    if (exit)
+    {
+        printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+        return;
+    }
+    printSuccessMessage("\nDatabase Opened Successfully!\n");
+    string sql = "UPDATE CARS SET TOTAL_NO_OF_CARS='" + newCarsTotal + "' WHERE ID='" + car_id + "';";
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+    if (exit == SQLITE_OK)
+    {
+        printSuccessMessage("\nCars Total Updated Successfully...\n");
+        return;
+    }
+    printErrorMessage("\nCannot Update Cars Total...\nTry Again Later...\n");
+    return;
+}
+void updateCarsRented(string car_id, string newCarsRented)
+{
+    sqlite3 *DB;
+    int exit = 0;
+    char *sqliteError;
+    exit = sqlite3_open("./Database/DataBase.db", &DB);
+    if (exit)
+    {
+        printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+        return;
+    }
+    printSuccessMessage("\nDatabase Opened Successfully!\n");
+    string sql = "UPDATE CARS SET NO_OF_RENTED_cARS='" + newCarsRented + "' WHERE ID='" + car_id + "';";
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+    if (exit == SQLITE_OK)
+    {
+        printSuccessMessage("\nCars Rented Updated Successfully...\n");
+        return;
+    }
+    printErrorMessage("\nCannot Update Cars Rented...\nTry Again Later...\n");
+    return;
+}
+void updateCarsAvailabel(string car_id, string newCarsAvailable)
+{
+    sqlite3 *DB;
+    int exit = 0;
+    char *sqliteError;
+    exit = sqlite3_open("./Database/DataBase.db", &DB);
+    if (exit)
+    {
+        printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+        return;
+    }
+    printSuccessMessage("\nDatabase Opened Successfully!\n");
+    string sql = "UPDATE CARS SET NO_OF_AVAILABLE_CARS='" + newCarsAvailable + "' WHERE ID='" + car_id + "';";
+    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+    if (exit == SQLITE_OK)
+    {
+        printSuccessMessage("\nCars Available Updated Successfully...\n");
+        return;
+    }
+    printErrorMessage("\nCannot Update Cars Available...\nTry Again Later...\n");
+    return;
+}
 
 #endif

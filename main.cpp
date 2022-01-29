@@ -65,6 +65,12 @@ int main()
                     cin >> CarDetails.accidentHistory;
                     cout << "Enter Car Price Per KM : ";
                     cin >> CarDetails.pricePerKM;
+                    cout << "Enter Total Number of Cars : ";
+                    cin >> CarDetails.totalNoOfCars;
+                    cout << "Enter Total Number of Cars Rented : ";
+                    cin >> CarDetails.noOfRentedCars;
+                    cout << "Enter Totlal Number of Cars Available : ";
+                    cin >> CarDetails.noOfAvailableCars;
                     C.AddNewCar(CarDetails);
                     break;
                 case 2:
@@ -73,7 +79,7 @@ int main()
                     C.getCar(car_id);
                     break;
                 case 3:
-                    printInformation("\nChoose the Detail you want to Update :\n1.Name\n2.Capacity\n3.Fuel type\n4.Mileage\n5.Condition\n6.Driver\n7.Accident Hisotry\n8.Price Per KM");
+                    printInformation("\nChoose the Detail you want to Update :\n1.Name\n2.Capacity\n3.Fuel type\n4.Mileage\n5.Condition\n6.Driver\n7.Accident Hisotry\n8.Price Per KM\n9.Total Cars\n10.Cars Rented\n11.Cars Available");
                     cout << "Enter your Choice : ";
                     cin >> updateChoice;
                     cout << "\nEnter the Id of the Car : ";

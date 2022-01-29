@@ -38,6 +38,9 @@ private:
     string driver;
     string accidentHistory;
     string pricePerKM;
+    string totalNoOfCars;
+    string noOfRentedCars;
+    string noOfAvailableCars;
 
 public:
     void getTotalCars()
@@ -72,6 +75,9 @@ public:
         this->driver = CarDetails.driver;
         this->accidentHistory = CarDetails.accidentHistory;
         this->pricePerKM = CarDetails.pricePerKM;
+        this->totalNoOfCars = CarDetails.totalNoOfCars;
+        this->noOfRentedCars = CarDetails.noOfRentedCars;
+        this->noOfAvailableCars = CarDetails.noOfAvailableCars;
         sqlite3 *DB;
         int exit = 0;
         char *sqliteError;
@@ -82,7 +88,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "INSERT INTO CARS VALUES('" + this->company + " " + this->model + " " + this->number + "', " + this->id + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "');";
+        string sql = "INSERT INTO CARS VALUES('" + this->company + " " + this->model + " " + this->number + "', " + this->id + ", '" + this->seatingCapacity + "', '" + this->fuelType + "', '" + this->mileage + "', '" + this->condition + "', '" + this->driver + "', '" + this->accidentHistory + "', '" + this->pricePerKM + "', '" + this->totalNoOfCars + "', '" + this->noOfRentedCars + "', '" + this->noOfAvailableCars + "');";
         exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         if (exit != SQLITE_OK)
         {
@@ -121,6 +127,7 @@ public:
     {
         string newCompany, newModel, newNumber, newName;
         string newCapacity, newFuelType, newMileage, newCondition, newDriver, newAccidentHistory, newPricePerKM;
+        string newCarsTotal, newCarsRented, newCarsAvailable;
         switch (choice)
         {
         case 1:
@@ -169,7 +176,23 @@ public:
             cin >> newPricePerKM;
             updateCarPricePerKM(car_id, newPricePerKM);
             break;
+        case 9:
+            cout << "Enter Cars Total : ";
+            cin >> newCarsTotal;
+            updateCarsTotal(car_id, newCarsTotal);
+            break;
+        case 10:
+            cout << "Enter Cars Rented : ";
+            cin >> newCarsRented;
+            updateCarsTotal(car_id, newCarsRented);
+            break;
+        case 11:
+            cout << "Enter Cars Available : ";
+            cin >> newCarsAvailable;
+            updateCarsTotal(car_id, newCarsAvailable);
+            break;
         default:
+            printErrorMessage("\nInvalid Choice\n");
             break;
         }
     }
