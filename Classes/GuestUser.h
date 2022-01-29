@@ -17,7 +17,7 @@ private:
 public:
     void greet()
     {
-        cout << "Hello World from GuestUser" << endl;
+        cout << "Hello World from GuestUser " << endl;
     }
 };
 #endif

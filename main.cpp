@@ -74,15 +74,15 @@ int main()
                     cin >> CarDetails.noOfRentedCars;
                     cout << "Enter Totlal Number of Cars Available : ";
                     cin >> CarDetails.noOfAvailableCars;
-                    C.AddNewCar(CarDetails);
+                    A.AddNewCar(CarDetails, C);
                     break;
                 case 2:
-                    C.getAllCars();
+                    A.getAllCars(C);
                     break;
                 case 3:
                     cout << "\nEnter the Id of the Car : ";
                     cin >> car_id;
-                    C.getCar(car_id);
+                    A.getCar(car_id, C);
                     break;
                 case 4:
                     printInformation("\nChoose the Detail you want to Update :\n1.Name\n2.Capacity\n3.Fuel type\n4.Mileage\n5.Condition\n6.Driver\n7.Accident Hisotry\n8.Price Per KM\n9.Total Cars\n10.Cars Rented\n11.Cars Available");
@@ -90,7 +90,7 @@ int main()
                     cin >> updateChoice;
                     cout << "\nEnter the Id of the Car : ";
                     cin >> car_id;
-                    C.updateCar(updateChoice, to_string(car_id));
+                    A.updateCar(updateChoice, to_string(car_id), C);
                     break;
                 case 5:
                     admin.LoggedIn = 0;
