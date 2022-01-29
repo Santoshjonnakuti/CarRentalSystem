@@ -35,4 +35,18 @@ struct CarDataType
     string noOfRentedCars;
     string noOfAvailableCars;
 };
+struct UserDataType
+{
+    string id;
+    string name;
+    string mobileNumber;
+    string emailId;
+    string address;
+};
+struct RegisteredUserDataType
+{
+    UserDataType Data;
+    string userName;
+    string password;
+};
 #endif

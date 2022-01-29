@@ -12,17 +12,18 @@
 int main()
 {
 
+    AdminDetails AD;
     Admin A;
+    RegisteredUserDataType RU;
     RegisteredUser R;
     GuestUser G;
     Car C;
-    AdminDetails AD;
     int choice, car_id, updateChoice;
     Choice admin, registeredUser, guest;
     CarDataType CarDetails;
     while (true)
     {
-        cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Exit Application\n"
+        cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Register as User\n5. Exit Application\n"
              << endl;
         cout << "Enter your choice : ";
         cin >> choice;
@@ -108,6 +109,22 @@ int main()
             G.greet();
             break;
         case 4:
+            cin.ignore();
+            cout << "Enter Your Name : ";
+            getline(cin, RU.Data.name);
+            cout << "Enter Your Mobile Number : ";
+            cin >> RU.Data.mobileNumber;
+            cout << "Enter Your Email Id[Used as Username] : ";
+            cin >> RU.Data.emailId;
+            cin.ignore();
+            RU.userName = RU.Data.emailId;
+            cout << "Enter Your Address : ";
+            getline(cin, RU.Data.address);
+            cout << "Enter Your Password : ";
+            cin >> RU.password;
+            R.addRegisteredUser(RU);
+            break;
+        case 5:
             cout << "Closing the Application..." << endl;
             return 0;
         default:
