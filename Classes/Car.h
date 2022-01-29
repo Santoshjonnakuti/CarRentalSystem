@@ -21,6 +21,12 @@ static int getCarDetails(void *data, int argc, char **argv, char **azColName)
     printCarDetails(argv);
     return 0;
 }
+static int getAllCarsDetails(void *data, int argc, char **argv, char **azColName)
+{
+    printCarDetails(argv);
+    return 0;
+}
+
 class Car
 {
 
@@ -195,6 +201,22 @@ public:
             printErrorMessage("\nInvalid Choice\n");
             break;
         }
+    }
+    void getAllCars()
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM CARS;";
+        sqlite3_exec(DB, sql.c_str(), getAllCarsDetails, 0, &sqliteError);
+        sqlite3_close(DB);
     }
 };
 #endif

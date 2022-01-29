@@ -28,7 +28,7 @@ void printInformation(string informationMessage)
 void printCarDetails(char **argv)
 {
     printInformation("--------------------------Car Details-----------------------------------\nCar Name            : " + string(argv[0]) + "\nCar Capacity        : " + argv[2] + "\nCar FuelType        : " + argv[3] + "\nCar Mileage         : " + argv[4] + "\nCar Condition       : " + argv[5] + "\nCar Driver          : " + argv[6] + "\nCar AccidentHistory : " + argv[7] + "\nCar PriccePerKM     : " + argv[8] +
-                     "\nCar Total           : " + argv[9] + "\nCar Rented          : " + argv[10] + "\nCar Available        : " + argv[11] + "\n");
+                     "\nCar Total           : " + argv[9] + "\nCar Rented          : " + argv[10] + "\nCar Available       : " + argv[11] + "\n");
     return;
 }
 
