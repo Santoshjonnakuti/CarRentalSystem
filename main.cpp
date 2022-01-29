@@ -7,6 +7,7 @@
 #include "Classes/Car.h"
 #include "Utils/DataTypes.h"
 #include "Utils/AdminUtils.h"
+#include "Utils/RegisteredUserUtils.h"
 #include "Utils/Messages.h"
 
 int main()
@@ -104,6 +105,36 @@ int main()
             break;
         case 2:
             R.greet();
+            cout << "\nEnter Your Username : ";
+            cin >> RU.userName;
+            cout << "\nEnter Your Password : ";
+            cin >> RU.password;
+            registeredUser.LoggedIn = registeredUserLogin(RU);
+            while (registeredUser.LoggedIn)
+            {
+                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
+                     << endl;
+                cout << "\nEnter Your Choice : ";
+                cin >> registeredUser.choice;
+                switch (registeredUser.choice)
+                {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    getRegisteredUserInformation(RU);
+                    break;
+                case 5:
+                    registeredUser.LoggedIn = 0;
+                    break;
+                default:
+                    printErrorMessage("\nInvalid Choice\n");
+                    break;
+                }
+            }
             break;
         case 3:
             G.greet();
