@@ -184,12 +184,12 @@ public:
         case 10:
             cout << "Enter Cars Rented : ";
             cin >> newCarsRented;
-            updateCarsTotal(car_id, newCarsRented);
+            updateCarsRented(car_id, newCarsRented);
             break;
         case 11:
             cout << "Enter Cars Available : ";
             cin >> newCarsAvailable;
-            updateCarsTotal(car_id, newCarsAvailable);
+            updateCarsAvailabel(car_id, newCarsAvailable);
             break;
         default:
             printErrorMessage("\nInvalid Choice\n");

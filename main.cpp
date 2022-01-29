@@ -42,23 +42,26 @@ int main()
                      << endl;
                 cout << "Enter your Choice : ";
                 cin >> admin.choice;
+                cin.clear();
                 switch (admin.choice)
                 {
                 case 1:
                     cout << "Enter Car Company : ";
-                    getline(cin, CarDetails.company);
+                    cin >> CarDetails.company;
                     cout << "Enter Car Model : ";
-                    getline(cin, CarDetails.model);
+                    cin >> CarDetails.model;
+                    cin.ignore();
                     cout << "Enter Car Number : ";
                     getline(cin, CarDetails.number);
-                    cout << "Enter Car Seating Capacity";
+                    cout << "Enter Car Seating Capacity : ";
                     cin >> CarDetails.seatingCapacity;
                     cout << "Enter Car Fuel Type : ";
-                    getline(cin, CarDetails.fuelType);
+                    cin >> CarDetails.fuelType;
                     cout << "Enter Car Mileage : ";
                     cin >> CarDetails.mileage;
                     cout << "Enter Car Condition : ";
-                    getline(cin, CarDetails.condition);
+                    cin >> CarDetails.condition;
+                    cin.ignore();
                     cout << "Enter Car Driver Name : ";
                     getline(cin, CarDetails.driver);
                     cout << "Enter Car Accident History [Yes/No]: ";
