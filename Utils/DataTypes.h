@@ -49,4 +49,10 @@ struct RegisteredUserDataType
     string userName;
     string password;
 };
+struct GuestUserDataType
+{
+    string id;
+    string name;
+    string mobileNumber;
+};
 #endif

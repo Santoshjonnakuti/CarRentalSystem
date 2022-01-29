@@ -8,6 +8,7 @@
 #include "Utils/DataTypes.h"
 #include "Utils/AdminUtils.h"
 #include "Utils/RegisteredUserUtils.h"
+#include "Utils/GuestUserUtils.h"
 #include "Utils/Messages.h"
 
 int main()
@@ -15,16 +16,17 @@ int main()
 
     AdminDetails AD;
     Admin A;
-    RegisteredUserDataType RU;
+    RegisteredUserDataType RUD;
     RegisteredUser R;
+    GuestUserDataType GUD;
     GuestUser G;
     Car C;
     int choice, car_id, updateChoice;
-    Choice admin, registeredUser, guest;
+    Choice admin, registeredUser, guestUser;
     CarDataType CarDetails;
     while (true)
     {
-        cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Register as User\n5. Exit Application\n"
+        cout << "\n1. Login as Admin\n2. Login as Registered User\n3. Login as Guest\n4. Register as User\n5. Know Your Booking Status (Guest)\n6. Exit Application\n"
              << endl;
         cout << "Enter your choice : ";
         cin >> choice;
@@ -106,10 +108,10 @@ int main()
         case 2:
             R.greet();
             cout << "\nEnter Your Username : ";
-            cin >> RU.userName;
+            cin >> RUD.userName;
             cout << "\nEnter Your Password : ";
-            cin >> RU.password;
-            registeredUser.LoggedIn = registeredUserLogin(RU);
+            cin >> RUD.password;
+            registeredUser.LoggedIn = registeredUserLogin(RUD);
             while (registeredUser.LoggedIn)
             {
                 cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
@@ -125,7 +127,7 @@ int main()
                 case 3:
                     break;
                 case 4:
-                    getRegisteredUserInformation(RU);
+                    getRegisteredUserInformation(RUD);
                     break;
                 case 5:
                     registeredUser.LoggedIn = 0;
@@ -138,24 +140,59 @@ int main()
             break;
         case 3:
             G.greet();
+            cin.ignore();
+            cout << "Enter Your Name : ";
+            getline(cin, GUD.name);
+            cout << "Enter Your Mobile Number : ";
+            cin >> GUD.mobileNumber;
+            guestUser.LoggedIn = G.addGuestUser(GUD);
+            while (guestUser.LoggedIn)
+            {
+                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
+                     << endl;
+                cout << "\nEnter Your Choice : ";
+                cin >> guestUser.choice;
+                switch (guestUser.choice)
+                {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    cout << "Enter Your Id : ";
+                    cin >> GUD.id;
+                    getGuestUserInformation(GUD);
+                    break;
+                case 5:
+                    guestUser.LoggedIn = 0;
+                    break;
+                default:
+                    printErrorMessage("\nInvalid Choice\n");
+                    break;
+                }
+            }
             break;
         case 4:
             cin.ignore();
             cout << "Enter Your Name : ";
-            getline(cin, RU.Data.name);
+            getline(cin, RUD.Data.name);
             cout << "Enter Your Mobile Number : ";
-            cin >> RU.Data.mobileNumber;
+            cin >> RUD.Data.mobileNumber;
             cout << "Enter Your Email Id[Used as Username] : ";
-            cin >> RU.Data.emailId;
+            cin >> RUD.Data.emailId;
             cin.ignore();
-            RU.userName = RU.Data.emailId;
+            RUD.userName = RUD.Data.emailId;
             cout << "Enter Your Address : ";
-            getline(cin, RU.Data.address);
+            getline(cin, RUD.Data.address);
             cout << "Enter Your Password : ";
-            cin >> RU.password;
-            R.addRegisteredUser(RU);
+            cin >> RUD.password;
+            R.addRegisteredUser(RUD);
             break;
         case 5:
+            break;
+        case 6:
             cout << "Closing the Application..." << endl;
             return 0;
         default:

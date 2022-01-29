@@ -39,4 +39,9 @@ void printRegisteredUserDetails(char **argv)
     printInformation("--------------------------User Details----------------------------------\nUser Name            : " + string(argv[1]) + "\nUser Mobile Number   : " + argv[2] + "\nUser Email Id        : " + argv[3] + "\nUser Address         : " + argv[4] + "\nUser Username        : " + argv[5] + "\nUser Password        : " + argv[6] + "\n");
     return;
 }
+void printGuestUserDetails(char **argv)
+{
+    printInformation("------------------------Guest User Details------------------------------\nUser Name            : " + string(argv[1]) + "\nUser Mobile Number   : " + argv[2] + "\nUser Id              : " + argv[0] + "\n");
+    return;
+}
 #endif
