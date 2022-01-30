@@ -168,11 +168,29 @@ public:
         printSuccessMessage("\nDatabase Opened Successfully!\n");
         string sql = "SELECT * FROM CARS;";
         sqlite3_exec(DB, sql.c_str(), getAllCarsDetails, 0, &sqliteError);
+        printSuccessMessage("\nRemember Car Id of the required Car to Book...\n");
         printWarningMessage("\nDo You Want to Filter Cars According to Your Requirements [Y/N]: ");
         char isFiltering;
         cin >> isFiltering;
-        if (isFiltering == 'Y' || isFiltering == 'y')
+        while (isFiltering == 'Y' || isFiltering == 'y')
         {
+            cout << "Enter min Seating Capacity : ";
+            cin >> RUCBFD.minNumberOfSeats;
+            cout << "Enter fuel Type of the Car [Petrol/Diesel/CNG]: ";
+            cin >> RUCBFD.fuelType;
+            cout << "Enter min Mileage of Car : ";
+            cin >> RUCBFD.minMileage;
+            cout << "Enter max Price Per KM of Car : ";
+            cin >> RUCBFD.maxPricePerKM;
+            sql = "SELECT * FROM CARS WHERE CAPACITY >= '" + RUCBFD.minNumberOfSeats + "' AND MILEAGE >= '" + RUCBFD.minMileage + "' AND PRICEPERKM <= '" + RUCBFD.maxPricePerKM + "';";
+            exit = sqlite3_exec(DB, sql.c_str(), getRUCBFilteredCars, 0, &sqliteError);
+            if (exit != SQLITE_OK)
+            {
+                printErrorMessage("\nUnable to Filter Now...\n");
+                break;
+            }
+            printWarningMessage("\nDo You Want to Filter Again [Y/N]: ");
+            cin >> isFiltering;
         }
         RUCBD.userId = RU.Data.id;
         sql = "SELECT count(BOOKING_ID) FROM BOOKINGS;";

@@ -16,6 +16,7 @@ string RUUserName = "", RUPassword = "";
 string LoggedInRegisteredUserID = "";
 RUResetPasswordDetailsType RURPD;
 CarBookingDataType RUCBD;
+CarBookingFilterDataType RUCBFD;
 int totalRegisteredUsers;
 
 static int getNoOfRUsers(void *data, int argc, char **argv, char **azColName)
@@ -55,6 +56,11 @@ static int getRUCBookingId(void *data, int argc, char **argv, char **azColName)
 static int getRUCBookingPrice(void *data, int argc, char **argv, char **azColName)
 {
     RUCBD.price = atoi(argv[0]) * RUCBD.distance + 1000;
+    return 0;
+}
+static int getRUCBFilteredCars(void *data, int argc, char **argv, char **azColName)
+{
+    printCarDetails(argv);
     return 0;
 }
 void addBooking(CarBookingDataType CBD)

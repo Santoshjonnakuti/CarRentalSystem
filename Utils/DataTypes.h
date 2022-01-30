@@ -86,4 +86,14 @@ struct CarBookingDataType
     string pickUpAddress;
     string bookingStatus;
 };
+struct CarBookingFilterDataType
+{
+    string minNumberOfSeats;
+    string condition;
+    string minPricePerKM;
+    string maxPricePerKM;
+    string minMileage;
+    string fuelType;
+};
+
 #endif
