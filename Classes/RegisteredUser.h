@@ -154,6 +154,50 @@ public:
         printSuccessMessage("\nPassword Reset Successful...\n");
         sqlite3_close(DB);
     }
+    void registeredUserBookACar(RegisteredUserDataType RU)
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM CARS;";
+        sqlite3_exec(DB, sql.c_str(), getAllCarsDetails, 0, &sqliteError);
+        printWarningMessage("\nDo You Want to Filter Cars According to Your Requirements [Y/N]: ");
+        char isFiltering;
+        cin >> isFiltering;
+        if (isFiltering == 'Y' || isFiltering == 'y')
+        {
+        }
+        RUCBD.userId = RU.Data.id;
+        sql = "SELECT count(BOOKING_ID) FROM BOOKINGS;";
+        sqlite3_exec(DB, sql.c_str(), getRUCBookingId, 0, &sqliteError);
+        cout << "Enter the Card Id : ";
+        cin >> RUCBD.carId;
+        cout << "Enter the Start Date of Booking [DD/MM/YYYY] : ";
+        cin >> RUCBD.startDate;
+        cout << "Enter the Start Time of Bookin [HH:MM] : ";
+        cin >> RUCBD.startTime;
+        cout << "Enter the End Date of Booking [DD/MM/YYYY] : ";
+        cin >> RUCBD.endDate;
+        cout << "Enter the End Time of Booking [HH:MM] : ";
+        cin >> RUCBD.endTime;
+        cout << "Enter the Distance in KM : ";
+        cin >> RUCBD.distance;
+        cin.ignore();
+        cout << "Enter Car Pick Up Address : ";
+        getline(cin, RUCBD.pickUpAddress);
+        RUCBD.bookingStatus = "PENDING";
+        sql = "SELECT PRICEPERKM FROM CARS WHERE ID = '" + RUCBD.carId + "';";
+        sqlite3_exec(DB, sql.c_str(), getRUCBookingPrice, 0, &sqliteError);
+        sqlite3_close(DB);
+        addBooking(RUCBD);
+    }
 };
 
 #endif

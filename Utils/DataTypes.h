@@ -72,4 +72,18 @@ struct AdminDashboardDetailsType
     int totalNoOfBookingsRejected;
     int totalNoOfBOokingsPending;
 };
+struct CarBookingDataType
+{
+    string bookingId;
+    string carId;
+    string userId;
+    string startDate;
+    string startTime;
+    string endDate;
+    string endTime;
+    double distance;
+    double price;
+    string pickUpAddress;
+    string bookingStatus;
+};
 #endif

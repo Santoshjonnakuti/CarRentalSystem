@@ -128,6 +128,7 @@ int main()
                 switch (registeredUser.choice)
                 {
                 case 1:
+                    R.registeredUserBookACar(RUD);
                     break;
                 case 2:
                     break;
