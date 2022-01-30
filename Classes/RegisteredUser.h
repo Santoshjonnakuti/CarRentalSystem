@@ -40,7 +40,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM NOOFREGISTEREDUSERS;";
+        string sql = "SELECT count(ID) FROM REGISTERED_USER;";
         sqlite3_exec(DB, sql.c_str(), getNoOfRUsers, 0, &sqliteError);
         totalRUsers = totalRegisteredUsers;
         sqlite3_close(DB);
@@ -68,8 +68,6 @@ public:
             return;
         }
         printSuccessMessage("\nInsertion Successful...\n");
-        sql = "UPDATE NOOFREGISTEREDUSERS SET TOTAL_REGISTERED_USERS=" + RUData.Data.id + " WHERE TOTAL_REGISTERED_USERS=" + to_string(totalRUsers);
-        sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         sqlite3_close(DB);
     }
 };

@@ -53,7 +53,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM NOOFCARS;";
+        string sql = "SELECT count(ID) FROM CARS;";
         sqlite3_exec(DB, sql.c_str(), getNoOfCars, 0, &sqliteError);
         C.total_cars = i;
         sqlite3_close(DB);
@@ -94,8 +94,6 @@ public:
             return;
         }
         printSuccessMessage("\nInsertion Successful...\n");
-        sql = "UPDATE NOOFCARS SET TOTAL_CARS=" + C.Data.id + " WHERE TOTAL_CARS=" + to_string(i);
-        sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         sqlite3_close(DB);
     }
     void getCar(int car_id, Car &C)

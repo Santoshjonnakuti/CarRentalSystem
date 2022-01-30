@@ -39,7 +39,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM NOOFGUESTUSERS;";
+        string sql = "SELECT count(ID) FROM GUEST_USER;";
         sqlite3_exec(DB, sql.c_str(), getNoOfGUsers, 0, &sqliteError);
         totalGUsers = totalGuestUsers;
         sqlite3_close(DB);
@@ -69,8 +69,6 @@ public:
         printSuccessMessage("\nInsertion Successful...\n");
         printSuccessMessage("\nLogged In as Guest User...\n");
         printInformation("\nYour User Id is " + GUData.id + "..\nUse this Id to Know Your Booking Status of Car...\n");
-        sql = "UPDATE NOOFGUESTUSERS SET TOTAL_GUEST_USERS=" + GUData.id + " WHERE TOTAL_GUEST_USERS=" + to_string(totalGUsers);
-        sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         sqlite3_close(DB);
         return 1;
     }
