@@ -35,12 +35,8 @@ static int getNoOfGUsers(void *data, int argc, char **argv, char **azColName)
 // }
 static int GUDetails(void *data, int argc, char **argv, char **azColName)
 {
-    // string id = string(argv[0]);
-    // if (GUId.compare(id) == 0)
-    // {
     printGuestUserDetails(argv);
     guestUserLoggedIn = 1;
-    // }
     return 0;
 }
 

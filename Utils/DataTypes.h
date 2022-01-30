@@ -58,4 +58,9 @@ struct GuestUserDataType
     string name;
     string mobileNumber;
 };
+struct RUResetPasswordDetailsType
+{
+    string sQuestion;
+    string sQAnswer;
+};
 #endif

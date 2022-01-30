@@ -117,10 +117,11 @@ int main()
             RUD.Data.id = LoggedInRegisteredUserID;
             while (registeredUser.LoggedIn)
             {
-                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
+                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Reset Password\n6.Logout\n"
                      << endl;
                 cout << "\nEnter Your Choice : ";
                 cin >> registeredUser.choice;
+                cin.ignore();
                 switch (registeredUser.choice)
                 {
                 case 1:
@@ -133,6 +134,9 @@ int main()
                     R.getRegisteredUserInformation(RUD);
                     break;
                 case 5:
+                    R.registeredUserResetPassword(RUD);
+                    break;
+                case 6:
                     printSuccessMessage("\nRegistered User Logout Successful...\n");
                     registeredUser.LoggedIn = 0;
                     break;
@@ -204,6 +208,7 @@ int main()
             break;
         case 6:
             printWarningMessage("\nClosing The Application...\n");
+            printSuccessMessage("\nApplication Closed...\n");
             return 0;
         default:
             cout << "\nInvalid Choice\n";

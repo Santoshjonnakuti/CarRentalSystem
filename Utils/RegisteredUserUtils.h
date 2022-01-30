@@ -14,6 +14,7 @@ using namespace std;
 int registeredUserLoggedIn = 0;
 string RUUserName = "", RUPassword = "";
 string LoggedInRegisteredUserID = "";
+RUResetPasswordDetailsType RURPD;
 int totalRegisteredUsers;
 
 static int getNoOfRUsers(void *data, int argc, char **argv, char **azColName)
@@ -35,13 +36,14 @@ static int RUcallback(void *data, int argc, char **argv, char **azColName)
 }
 static int RUDetails(void *data, int argc, char **argv, char **azColName)
 {
-    // string uname = string(argv[5]);
-    // string passwd = string(argv[6]);
-    // if (RUUserName.compare(uname) == 0 && RUPassword.compare(passwd) == 0)
-    // {
     printRegisteredUserDetails(argv);
     registeredUserLoggedIn = 1;
-    // }
+    return 0;
+}
+static int RUResetPassword(void *data, int argc, char **argv, char **azColName)
+{
+    RURPD.sQuestion += string(argv[7]);
+    RURPD.sQAnswer += string(argv[8]);
     return 0;
 }
 

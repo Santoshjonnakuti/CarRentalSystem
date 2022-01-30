@@ -112,6 +112,48 @@ public:
         }
         return;
     }
+    void registeredUserResetPassword(RegisteredUserDataType RU)
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        string sql;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        sql = "SELECT * FROM REGISTERED_USER WHERE ID='" + RU.Data.id + "';";
+        sqlite3_exec(DB, sql.c_str(), RUResetPassword, 0, &sqliteError);
+        printInformation("\nAnswer the Below Security Question\nTo Reset Your Password\n");
+        string sAns, RURPNewPassword;
+        cout << RURPD.sQuestion;
+        getline(cin, sAns);
+        if (!RURPD.sQAnswer.compare(sAns) == 0)
+        {
+            printErrorMessage("\nWrong Answer...\nPlease Try Again...\n");
+            RURPD.sQuestion = "";
+            RURPD.sQAnswer = "";
+            sqlite3_close(DB);
+            return;
+        }
+        cout << "Enter Your New Password : ";
+        cin >> RURPNewPassword;
+        RURPD.sQuestion = "";
+        RURPD.sQAnswer = "";
+        sql = "UPDATE REGISTERED_USER SET PASSWORD='" + RURPNewPassword + "' WHERE ID='" + RU.Data.id + "';";
+        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+        if (exit != SQLITE_OK)
+        {
+            printErrorMessage("\nCannot Reset Password...\nTry Again Later...\n");
+            sqlite3_close(DB);
+            return;
+        }
+        printSuccessMessage("\nPassword Reset Successful...\n");
+        sqlite3_close(DB);
+    }
 };
 
 #endif
