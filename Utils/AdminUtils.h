@@ -13,6 +13,7 @@ using namespace std;
 int adminLoggedIn = 0;
 string AUserName = "", APassword = "";
 string LoggedInAdminID = "";
+AdminDashboardDetailsType ADashboardDetails;
 int i = 0;
 
 static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
@@ -42,5 +43,29 @@ static int callback(void *data, int argc, char **argv, char **azColName)
     }
     return 0;
 }
-
+static int getAdminDashboardRU(void *data, int argc, char **argv, char **azColName)
+{
+    ADashboardDetails.noOfRegisteredUsers = atoi(argv[0]);
+    return 0;
+}
+static int getAdminDashboardGU(void *data, int argc, char **argv, char **azColName)
+{
+    ADashboardDetails.noOfGuestUsers = atoi(argv[0]);
+    return 0;
+}
+static int getAdminDashboardTB(void *data, int argc, char **argv, char **azColName)
+{
+    ADashboardDetails.totalNoOfBookings = atoi(argv[0]);
+    return 0;
+}
+static int getAdminDashboardTBA(void *data, int argc, char **argv, char **azColName)
+{
+    ADashboardDetails.totalNoOfBookingsAccepted = atoi(argv[0]);
+    return 0;
+}
+static int getAdminDashboardTBR(void *data, int argc, char **argv, char **azColName)
+{
+    ADashboardDetails.totalNoOfBookingsRejected = atoi(argv[0]);
+    return 0;
+}
 #endif

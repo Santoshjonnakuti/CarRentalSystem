@@ -63,4 +63,13 @@ struct RUResetPasswordDetailsType
     string sQuestion;
     string sQAnswer;
 };
+struct AdminDashboardDetailsType
+{
+    int noOfRegisteredUsers;
+    int noOfGuestUsers;
+    int totalNoOfBookings;
+    int totalNoOfBookingsAccepted;
+    int totalNoOfBookingsRejected;
+    int totalNoOfBOokingsPending;
+};
 #endif

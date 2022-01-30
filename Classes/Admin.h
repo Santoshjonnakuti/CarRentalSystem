@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <string.h>
 #include "../sqlite/sqlite3.h"
 #include "../Utils/Messages.h"
 #include "../Utils/DataTypes.h"
@@ -49,6 +50,33 @@ public:
         AUserName = "";
         APassword = "";
         return adminLoggedIn;
+    }
+    void adminDashboard()
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT count(ID) FROM REGISTERED_USER;";
+        sqlite3_exec(DB, sql.c_str(), getAdminDashboardRU, 0, &sqliteError);
+        sql = "SELECT count(ID) FROM GUEST_USER;";
+        sqlite3_exec(DB, sql.c_str(), getAdminDashboardGU, 0, &sqliteError);
+        sql = "SELECT count(BOOKING_ID) FROM BOOKINGS;";
+        sqlite3_exec(DB, sql.c_str(), getAdminDashboardTB, 0, &sqliteError);
+        sql = "SELECT count(BOOKING_ID) FROM BOOKINGS WHERE BOOKING_STATUS='ACCEPTED';";
+        sqlite3_exec(DB, sql.c_str(), getAdminDashboardTBA, 0, &sqliteError);
+        sql = "SELECT count(BOOKING_ID) FROM BOOKINGS WHERE BOOKING_STATUS='REJECTED';";
+        sqlite3_exec(DB, sql.c_str(), getAdminDashboardTBR, 0, &sqliteError);
+        ADashboardDetails.totalNoOfBOokingsPending = ADashboardDetails.totalNoOfBookings - (ADashboardDetails.totalNoOfBookingsAccepted +
+                                                                                            ADashboardDetails.totalNoOfBookingsRejected);
+        printAdminDashboard(ADashboardDetails);
+        sqlite3_close(DB);
     }
     void getTotalCars(Car &C)
     {

@@ -39,7 +39,6 @@ static int GUDetails(void *data, int argc, char **argv, char **azColName)
     guestUserLoggedIn = 1;
     return 0;
 }
-
 // int registeredUserLogin(RegisteredUserDataType RU)
 // {
 //     GUUsername = GUUsername + RU.userName;

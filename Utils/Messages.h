@@ -2,6 +2,7 @@
 #define MESSAGES_H
 #include <iostream>
 #include <string>
+#include "DataTypes.h"
 
 using namespace std;
 
@@ -10,19 +11,16 @@ void printErrorMessage(string errorMessage)
     string error = "\033[1;31m" + errorMessage + "\033[0m\n";
     cout << error << endl;
 }
-
 void printSuccessMessage(string successMessage)
 {
     string success = "\033[1;32m" + successMessage + "\033[0m\n";
     cout << success << endl;
 }
-
 void printWarningMessage(string warningMessage)
 {
     string warning = "\033[1;33m" + warningMessage + "\033[0m\n";
     cout << warning << endl;
 }
-
 void printInformation(string informationMessage)
 {
     string information = "\033[1;34m" + informationMessage + "\033[0m\n";
@@ -43,5 +41,9 @@ void printGuestUserDetails(char **argv)
 {
     printInformation("------------------------Guest User Details------------------------------\nUser Name            : " + string(argv[1]) + "\nUser Mobile Number   : " + argv[2] + "\nUser Id              : " + argv[0] + "\n");
     return;
+}
+void printAdminDashboard(AdminDashboardDetailsType ADDT)
+{
+    printInformation("-------------------------Admin Dashboard--------------------------------\nTotal No of Registered Users  : " + to_string(ADDT.noOfRegisteredUsers) + "\nTotal No of Guest Users       : " + to_string(ADDT.noOfGuestUsers) + "\nTotal No of Bookings          : " + to_string(ADDT.totalNoOfBookings) + "\nTotal No of Bookings Accepted : " + to_string(ADDT.totalNoOfBookingsAccepted) + "\nTotal No of Bookings Rejected : " + to_string(ADDT.totalNoOfBookingsRejected) + "\nTotal No of Bookings Pending  : " + to_string(ADDT.totalNoOfBOokingsPending) + "\n");
 }
 #endif

@@ -43,7 +43,7 @@ int main()
             AD.id = LoggedInAdminID;
             while (admin.LoggedIn)
             {
-                cout << "\n1. Add New Car\n2. Get All Cars\n3. Get Car Details\n4. Update Car Details\n5. Logout\n"
+                cout << "\n1.View Dashboard\n2. Add New Car\n3. Get All Cars\n4. Get Car Details\n5. Update Car Details\n6. Logout\n"
                      << endl;
                 cout << "Enter your Choice : ";
                 cin >> admin.choice;
@@ -51,6 +51,9 @@ int main()
                 switch (admin.choice)
                 {
                 case 1:
+                    A.adminDashboard();
+                    break;
+                case 2:
                     cout << "Enter Car Company : ";
                     cin >> CarDetails.company;
                     cout << "Enter Car Model : ";
@@ -81,15 +84,15 @@ int main()
                     cin >> CarDetails.noOfAvailableCars;
                     A.AddNewCar(CarDetails, C);
                     break;
-                case 2:
+                case 3:
                     A.getAllCars(C);
                     break;
-                case 3:
+                case 4:
                     cout << "\nEnter the Id of the Car : ";
                     cin >> car_id;
                     A.getCar(car_id, C);
                     break;
-                case 4:
+                case 5:
                     printInformation("\nChoose the Detail you want to Update :\n1.Name\n2.Capacity\n3.Fuel type\n4.Mileage\n5.Condition\n6.Driver\n7.Accident Hisotry\n8.Price Per KM\n9.Total Cars\n10.Cars Rented\n11.Cars Available");
                     cout << "Enter your Choice : ";
                     cin >> updateChoice;
@@ -97,7 +100,7 @@ int main()
                     cin >> car_id;
                     A.updateCar(updateChoice, to_string(car_id), C);
                     break;
-                case 5:
+                case 6:
                     printSuccessMessage("\nAdmin Logout Successful...\n");
                     admin.LoggedIn = 0;
                     break;
