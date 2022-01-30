@@ -1,7 +1,7 @@
 # CarRentalSystem
 OOP Project for 5th Sem
 
-**Steps to run the Application **
+**Steps to run the Application**
 1. Navigate to the Project Directory and run the following Command to **Compile sqlite3**
 
     `gcc ./sqlite/sqlite3.c ./sqlite/shell.c -o ./sqlite/sqlite3`
