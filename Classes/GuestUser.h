@@ -63,10 +63,12 @@ public:
         printSuccessMessage("\nLogged In as Guest User...\n");
         printInformation("\nYour User Id is " + GUData.id + "..\nUse this Id to Know Your Booking Status of Car...\n");
         sqlite3_close(DB);
+        guestUserLoggedIn = 1;
         return 1;
     }
     void getGuestUserInformation(GuestUserDataType GU)
     {
+        cout << GU.id << endl;
         GUId = GUId + GU.id;
         sqlite3 *DB;
         int exit = 0;
@@ -78,7 +80,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM GUEST_USER;";
+        string sql = "SELECT * FROM GUEST_USER WHERE ID='" + GU.id + "';";
         sqlite3_exec(DB, sql.c_str(), GUDetails, 0, &sqliteError);
         sqlite3_close(DB);
         if (!guestUserLoggedIn)

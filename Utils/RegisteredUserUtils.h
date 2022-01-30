@@ -13,6 +13,7 @@ using namespace std;
 
 int registeredUserLoggedIn = 0;
 string RUUserName = "", RUPassword = "";
+string LoggedInRegisteredUserID = "";
 int totalRegisteredUsers;
 
 static int getNoOfRUsers(void *data, int argc, char **argv, char **azColName)
@@ -26,6 +27,7 @@ static int RUcallback(void *data, int argc, char **argv, char **azColName)
     string passwd = string(argv[6]);
     if (RUUserName.compare(uname) == 0 && RUPassword.compare(passwd) == 0)
     {
+        LoggedInRegisteredUserID = LoggedInRegisteredUserID + argv[0];
         printSuccessMessage("\nLoggedin as " + string(argv[1]) + " ...\n");
         registeredUserLoggedIn = 1;
     }
@@ -33,13 +35,13 @@ static int RUcallback(void *data, int argc, char **argv, char **azColName)
 }
 static int RUDetails(void *data, int argc, char **argv, char **azColName)
 {
-    string uname = string(argv[5]);
-    string passwd = string(argv[6]);
-    if (RUUserName.compare(uname) == 0 && RUPassword.compare(passwd) == 0)
-    {
-        printRegisteredUserDetails(argv);
-        registeredUserLoggedIn = 1;
-    }
+    // string uname = string(argv[5]);
+    // string passwd = string(argv[6]);
+    // if (RUUserName.compare(uname) == 0 && RUPassword.compare(passwd) == 0)
+    // {
+    printRegisteredUserDetails(argv);
+    registeredUserLoggedIn = 1;
+    // }
     return 0;
 }
 

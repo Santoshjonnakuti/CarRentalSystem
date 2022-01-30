@@ -46,6 +46,8 @@ public:
         {
             printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
         }
+        AUserName = "";
+        APassword = "";
         return adminLoggedIn;
     }
     void getTotalCars(Car &C)

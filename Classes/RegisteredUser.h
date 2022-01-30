@@ -103,7 +103,7 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM REGISTERED_USER;";
+        string sql = "SELECT * FROM REGISTERED_USER WHERE ID='" + RU.Data.id + "';";
         sqlite3_exec(DB, sql.c_str(), RUDetails, 0, &sqliteError);
         sqlite3_close(DB);
         if (!registeredUserLoggedIn)

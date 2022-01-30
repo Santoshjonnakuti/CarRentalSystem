@@ -12,6 +12,7 @@ using namespace std;
 
 int adminLoggedIn = 0;
 string AUserName = "", APassword = "";
+string LoggedInAdminID = "";
 int i = 0;
 
 static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
@@ -35,6 +36,7 @@ static int callback(void *data, int argc, char **argv, char **azColName)
     string passwd = string(argv[2]);
     if (AUserName.compare(uname) == 0 && APassword.compare(passwd) == 0)
     {
+        LoggedInAdminID = LoggedInAdminID + argv[4];
         printSuccessMessage("\nLoggedin as Admin...\n");
         adminLoggedIn = 1;
     }

@@ -40,6 +40,7 @@ int main()
             cout << "Enter Password : ";
             cin >> AD.password;
             admin.LoggedIn = A.adminLogin(AD.userName, AD.password);
+            AD.id = LoggedInAdminID;
             while (admin.LoggedIn)
             {
                 cout << "\n1. Add New Car\n2. Get All Cars\n3. Get Car Details\n4. Update Car Details\n5. Logout\n"
@@ -97,7 +98,7 @@ int main()
                     A.updateCar(updateChoice, to_string(car_id), C);
                     break;
                 case 5:
-                    printSuccessMessage("\nLogout Successful...\n");
+                    printSuccessMessage("\nAdmin Logout Successful...\n");
                     admin.LoggedIn = 0;
                     break;
                 default:
@@ -113,6 +114,7 @@ int main()
             cout << "\nEnter Your Password : ";
             cin >> RUD.password;
             registeredUser.LoggedIn = R.registeredUserLogin(RUD);
+            RUD.Data.id = LoggedInRegisteredUserID;
             while (registeredUser.LoggedIn)
             {
                 cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
@@ -131,7 +133,7 @@ int main()
                     R.getRegisteredUserInformation(RUD);
                     break;
                 case 5:
-                    printSuccessMessage("\nLogout Successful...\n");
+                    printSuccessMessage("\nRegistered User Logout Successful...\n");
                     registeredUser.LoggedIn = 0;
                     break;
                 default:
@@ -148,6 +150,7 @@ int main()
             cout << "Enter Your Mobile Number : ";
             cin >> GUD.mobileNumber;
             guestUser.LoggedIn = G.addGuestUser(GUD);
+            GUD.id = LoggedInGuestUserID;
             while (guestUser.LoggedIn)
             {
                 cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
@@ -163,12 +166,10 @@ int main()
                 case 3:
                     break;
                 case 4:
-                    cout << "Enter Your Id : ";
-                    cin >> GUD.id;
                     G.getGuestUserInformation(GUD);
                     break;
                 case 5:
-                    printSuccessMessage("\nLogout Successful...\n");
+                    printSuccessMessage("\nGuest User Logout Successful...\n");
                     guestUser.LoggedIn = 0;
                     break;
                 default:

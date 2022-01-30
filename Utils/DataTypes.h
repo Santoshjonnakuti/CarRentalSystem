@@ -8,6 +8,7 @@ using namespace std;
 
 struct AdminDetails
 {
+    string id;
     string name;
     string userName;
     string password;
