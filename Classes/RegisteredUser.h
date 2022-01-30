@@ -4,17 +4,10 @@
 #include <iostream>
 #include <string>
 #include "../sqlite/sqlite3.h"
+#include "../Utils/RegisteredUserUtils.h"
 #include "User.h"
 
 using namespace std;
-
-int totalRegisteredUsers;
-
-static int getNoOfRUsers(void *data, int argc, char **argv, char **azColName)
-{
-    totalRegisteredUsers = atoi(argv[0]);
-    return totalRegisteredUsers;
-}
 
 class RegisteredUser : public User
 {
@@ -60,15 +53,64 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "INSERT INTO REGISTERED_USER VALUES('" + RUData.Data.id + "', '" + RUData.Data.name + "', '" + RUData.Data.mobileNumber + "', '" + RUData.Data.emailId + "', '" + RUData.Data.address + "', '" + RUData.userName + "', '" + RUData.password + "');";
+        string sql = "INSERT INTO REGISTERED_USER VALUES('" + RUData.Data.id + "', '" + RUData.Data.name + "', '" + RUData.Data.mobileNumber + "', '" + RUData.Data.emailId + "', '" + RUData.Data.address + "', '" + RUData.userName + "', '" + RUData.password + "', '" + RUData.Data.securityQuestion + "', '" + RUData.Data.securityQuestionAnswer + "');";
         exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
         if (exit != SQLITE_OK)
         {
+            cout << sqliteError;
             printErrorMessage("\nError Inserting into Table...\nTry Again Later\n");
             return;
         }
         printSuccessMessage("\nInsertion Successful...\n");
         sqlite3_close(DB);
+    }
+    int registeredUserLogin(RegisteredUserDataType RU)
+    {
+        RUUserName = RUUserName + RU.userName;
+        RUPassword = RUPassword + RU.password;
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return 0;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM REGISTERED_USER;";
+        sqlite3_exec(DB, sql.c_str(), RUcallback, 0, &sqliteError);
+        sqlite3_close(DB);
+        if (!registeredUserLoggedIn)
+        {
+            printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
+        }
+        RUUserName = "";
+        RUPassword = "";
+        return registeredUserLoggedIn;
+    }
+    void getRegisteredUserInformation(RegisteredUserDataType RU)
+    {
+        RUUserName = RUUserName + RU.userName;
+        RUPassword = RUPassword + RU.password;
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM REGISTERED_USER;";
+        sqlite3_exec(DB, sql.c_str(), RUDetails, 0, &sqliteError);
+        sqlite3_close(DB);
+        if (!registeredUserLoggedIn)
+        {
+            printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
+        }
+        return;
     }
 };
 

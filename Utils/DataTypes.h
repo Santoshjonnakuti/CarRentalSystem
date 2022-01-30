@@ -42,6 +42,8 @@ struct UserDataType
     string mobileNumber;
     string emailId;
     string address;
+    string securityQuestion;
+    string securityQuestionAnswer;
 };
 struct RegisteredUserDataType
 {

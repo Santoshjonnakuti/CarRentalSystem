@@ -6,27 +6,11 @@
 #include "../sqlite/sqlite3.h"
 #include "../Utils/Messages.h"
 #include "../Utils/DataTypes.h"
+#include "../Utils/AdminUtils.h"
 #include "../Database/DataBaseUtils.h"
 #include "Car.h"
 
 using namespace std;
-int i = 0;
-
-static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
-{
-    i = atoi(argv[0]);
-    return i;
-}
-static int getCarDetails(void *data, int argc, char **argv, char **azColName)
-{
-    printCarDetails(argv);
-    return 0;
-}
-static int getAllCarsDetails(void *data, int argc, char **argv, char **azColName)
-{
-    printCarDetails(argv);
-    return 0;
-}
 
 class Admin
 {
@@ -40,6 +24,29 @@ public:
     void greet()
     {
         cout << "Hello World from Admin" << endl;
+    }
+    int adminLogin(string uN, string pD)
+    {
+        AUserName = AUserName + uN;
+        APassword = APassword + pD;
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return 0;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM ADMIN;";
+        sqlite3_exec(DB, sql.c_str(), callback, 0, &sqliteError);
+        sqlite3_close(DB);
+        if (!adminLoggedIn)
+        {
+            printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
+        }
+        return adminLoggedIn;
     }
     void getTotalCars(Car &C)
     {

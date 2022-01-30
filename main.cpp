@@ -39,7 +39,7 @@ int main()
             cin >> AD.userName;
             cout << "Enter Password : ";
             cin >> AD.password;
-            admin.LoggedIn = adminLogin(AD.userName, AD.password);
+            admin.LoggedIn = A.adminLogin(AD.userName, AD.password);
             while (admin.LoggedIn)
             {
                 cout << "\n1. Add New Car\n2. Get All Cars\n3. Get Car Details\n4. Update Car Details\n5. Logout\n"
@@ -97,6 +97,7 @@ int main()
                     A.updateCar(updateChoice, to_string(car_id), C);
                     break;
                 case 5:
+                    printSuccessMessage("\nLogout Successful...\n");
                     admin.LoggedIn = 0;
                     break;
                 default:
@@ -111,7 +112,7 @@ int main()
             cin >> RUD.userName;
             cout << "\nEnter Your Password : ";
             cin >> RUD.password;
-            registeredUser.LoggedIn = registeredUserLogin(RUD);
+            registeredUser.LoggedIn = R.registeredUserLogin(RUD);
             while (registeredUser.LoggedIn)
             {
                 cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
@@ -127,9 +128,10 @@ int main()
                 case 3:
                     break;
                 case 4:
-                    getRegisteredUserInformation(RUD);
+                    R.getRegisteredUserInformation(RUD);
                     break;
                 case 5:
+                    printSuccessMessage("\nLogout Successful...\n");
                     registeredUser.LoggedIn = 0;
                     break;
                 default:
@@ -163,9 +165,10 @@ int main()
                 case 4:
                     cout << "Enter Your Id : ";
                     cin >> GUD.id;
-                    getGuestUserInformation(GUD);
+                    G.getGuestUserInformation(GUD);
                     break;
                 case 5:
+                    printSuccessMessage("\nLogout Successful...\n");
                     guestUser.LoggedIn = 0;
                     break;
                 default:
@@ -188,12 +191,18 @@ int main()
             getline(cin, RUD.Data.address);
             cout << "Enter Your Password : ";
             cin >> RUD.password;
+            cin.ignore();
+            printInformation("\nSecurity Question will be Used to Reset Your Password...\n");
+            cout << "Enter a Security Question : ";
+            getline(cin, RUD.Data.securityQuestion);
+            cout << "Enter Security Question Answer : ";
+            getline(cin, RUD.Data.securityQuestionAnswer);
             R.addRegisteredUser(RUD);
             break;
         case 5:
             break;
         case 6:
-            cout << "Closing the Application..." << endl;
+            printWarningMessage("\nClosing The Application...\n");
             return 0;
         default:
             cout << "\nInvalid Choice\n";

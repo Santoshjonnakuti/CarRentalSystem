@@ -13,6 +13,13 @@ using namespace std;
 
 int guestUserLoggedIn = 0;
 string GUId;
+int totalGuestUsers;
+
+static int getNoOfGUsers(void *data, int argc, char **argv, char **azColName)
+{
+    totalGuestUsers = atoi(argv[0]);
+    return totalGuestUsers;
+}
 // static int GUCallback(void *data, int argc, char **argv, char **azColName)
 // {
 //     string uname = string(argv[5]);
@@ -60,26 +67,5 @@ static int GUDetails(void *data, int argc, char **argv, char **azColName)
 //     GUPassword = "";
 //     return guestUserLoggedIn;
 // }
-void getGuestUserInformation(GuestUserDataType GU)
-{
-    GUId = GUId + GU.id;
-    sqlite3 *DB;
-    int exit = 0;
-    char *sqliteError;
-    exit = sqlite3_open("./Database/DataBase.db", &DB);
-    if (exit)
-    {
-        printErrorMessage("\nError Opening Database...\nTry Again Later\n");
-        return;
-    }
-    printSuccessMessage("\nDatabase Opened Successfully!\n");
-    string sql = "SELECT * FROM GUEST_USER;";
-    sqlite3_exec(DB, sql.c_str(), GUDetails, 0, &sqliteError);
-    sqlite3_close(DB);
-    if (!guestUserLoggedIn)
-    {
-        printErrorMessage("\nInvalid Credentials...\nPlease Try Again...\n");
-    }
-    return;
-}
+
 #endif
