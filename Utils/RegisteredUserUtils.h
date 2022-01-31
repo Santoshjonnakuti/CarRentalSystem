@@ -18,6 +18,7 @@ RUResetPasswordDetailsType RURPD;
 CarBookingDataType RUCBD;
 CarBookingFilterDataType RUCBFD;
 int totalRegisteredUsers;
+string cancelBookingId;
 
 static int getNoOfRUsers(void *data, int argc, char **argv, char **azColName)
 {
@@ -91,6 +92,54 @@ void RUAddBooking(CarBookingDataType CBD)
 static int RUViewPreviousBookings(void *data, int argc, char **argv, char **azColName)
 {
     printBookingDetails(argv);
+    return 0;
+}
+static int RUCancelBooking(void *data, int argc, char **argv, char **azColName)
+{
+    sqlite3 *DB;
+    int exit = 0;
+    char *sqliteError;
+    if (strcmp(argv[9], "REJECTED") == 0)
+    {
+        printWarningMessage("\nBooking is Rejceted...\nNo Need to Cancel...\n");
+        return 0;
+    }
+    else if (strcmp(argv[9], "PENDING") == 0)
+    {
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return 0;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "DELETE FROM BOOKINGS WHERE ISGUEST=0 AND BOOKING_ID='" + cancelBookingId + "';";
+        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+        if (exit == SQLITE_OK)
+        {
+            printWarningMessage("\nBooking Canceled Successfully...\n");
+            return 1;
+        }
+        printWarningMessage("\nCannot Cancel Right Now...\nPlease Try Again Later...\n");
+        return 0;
+    }
+    printWarningMessage("\nYour Booking is Accepted...\nCancelling Now will not refund the Service Charge of 1000RS/-\n");
+    char cancBookingChoice;
+    cout << "Do you Wish To Continue [Y/N]: ";
+    cin >> cancBookingChoice;
+    if (cancBookingChoice == 'Y' || cancBookingChoice == 'y')
+    {
+        string sql = "DELETE FROM BOOKINGS WHERE ISGUEST=0 AND BOOKING_ID='" + cancelBookingId + "';";
+        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+        if (exit == SQLITE_OK)
+        {
+            printWarningMessage("\nBooking Canceled Successfully...\n");
+            return 1;
+        }
+        printWarningMessage("\nCannot Cancel Right Now...\nPlease Try Again Later...\n");
+        return 0;
+    }
+    printWarningMessage("\nCancellation Terminated...\n");
     return 0;
 }
 #endif

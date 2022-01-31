@@ -134,6 +134,7 @@ int main()
                     R.registeredUserViewPreviousBookings(RUD);
                     break;
                 case 3:
+                    R.registeredUserCancelABooking(RUD);
                     break;
                 case 4:
                     R.getRegisteredUserInformation(RUD);
@@ -162,7 +163,7 @@ int main()
             GUD.id = LoggedInGuestUserID;
             while (guestUser.LoggedIn)
             {
-                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Logout\n"
+                cout << "\n1.Book a Car\n2.View You Details\n3.Logout\n"
                      << endl;
                 cout << "\nEnter Your Choice : ";
                 cin >> guestUser.choice;
@@ -172,13 +173,9 @@ int main()
                     G.guestUserBookACar(GUD);
                     break;
                 case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
                     G.getGuestUserInformation(GUD);
                     break;
-                case 5:
+                case 3:
                     printSuccessMessage("\nGuest User Logout Successful...\n");
                     guestUser.LoggedIn = 0;
                     break;

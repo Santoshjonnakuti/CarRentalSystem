@@ -243,6 +243,24 @@ public:
         sqlite3_exec(DB, sql.c_str(), RUViewPreviousBookings, 0, &sqliteError);
         sqlite3_close(DB);
     }
+    void registeredUserCancelABooking(RegisteredUserDataType RU)
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        cout << "Enter the Id of the Booking : ";
+        cin >> cancelBookingId;
+        string sql = "SELECT * FROM BOOKINGS WHERE ISGUEST=0 AND BOOKING_ID='" + cancelBookingId + "';";
+        sqlite3_exec(DB, sql.c_str(), RUCancelBooking, 0, &sqliteError);
+        sqlite3_close(DB);
+    }
 };
 
 #endif
