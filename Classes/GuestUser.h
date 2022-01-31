@@ -162,5 +162,31 @@ public:
         printErrorMessage("\nBooking Terminated...\n");
         sqlite3_close(DB);
     }
+    void guestUserKnowBookingStatus()
+    {
+        string gID, bId;
+        cout << "Enter Your User Id : ";
+        cin >> gID;
+        cout << "Enter Your Booking Id : ";
+        cin >> bId;
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM BOOKINGS WHERE ISGUEST=1 AND BOOKING_USER_ID='" + gID + "' AND BOOKING_ID='" + bId + "';";
+        sqlite3_exec(DB, sql.c_str(), GUKnowBookingStatus, 0, &sqliteError);
+        if (!knowBookingStatusCheck)
+        {
+            printErrorMessage("\nInvalid Details...\nBooking Not Found...\n");
+            return;
+        }
+        return;
+    }
 };
 #endif

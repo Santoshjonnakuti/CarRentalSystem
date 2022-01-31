@@ -208,6 +208,7 @@ int main()
             R.addRegisteredUser(RUD);
             break;
         case 5:
+            G.guestUserKnowBookingStatus();
             break;
         case 6:
             printWarningMessage("\nClosing The Application...\n");

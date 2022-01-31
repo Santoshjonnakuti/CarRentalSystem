@@ -17,6 +17,7 @@ string LoggedInGuestUserID = "";
 int totalGuestUsers;
 CarBookingDataType GUCBD;
 CarBookingFilterDataType GUCBFD;
+int knowBookingStatusCheck = 0;
 static int getNoOfGUsers(void *data, int argc, char **argv, char **azColName)
 {
     totalGuestUsers = atoi(argv[0]);
@@ -104,5 +105,11 @@ void GUAddBooking(CarBookingDataType CBD)
     sql = "UPDATE ADMIN SET BOOKING_REQUESTS=BOOKING_REQUESTS + 1 WHERE ID='1';";
     sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
     return;
+}
+static int GUKnowBookingStatus(void *data, int argc, char **argv, char **azColName)
+{
+    printBookingDetails(argv);
+    knowBookingStatusCheck = 1;
+    return 0;
 }
 #endif
