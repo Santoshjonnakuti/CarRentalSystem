@@ -221,10 +221,26 @@ public:
         if (RUCBDCountinueBooking == 'Y' || RUCBDCountinueBooking == 'y')
         {
             sqlite3_close(DB);
-            addBooking(RUCBD);
+            RUAddBooking(RUCBD);
             return;
         }
         printErrorMessage("\nBooking Terminated...\n");
+        sqlite3_close(DB);
+    }
+    void registeredUserViewPreviousBookings(RegisteredUserDataType RU)
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM BOOKINGS WHERE ISGUEST=0 AND BOOKING_USER_ID='" + RU.Data.id + "' ORDER BY BOOKING_ID DESC;";
+        sqlite3_exec(DB, sql.c_str(), RUViewPreviousBookings, 0, &sqliteError);
         sqlite3_close(DB);
     }
 };

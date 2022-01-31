@@ -156,7 +156,7 @@ public:
         if (GUCBDCountinueBooking == 'Y' || GUCBDCountinueBooking == 'y')
         {
             sqlite3_close(DB);
-            addBooking(GUCBD);
+            GUAddBooking(GUCBD);
             return;
         }
         printErrorMessage("\nBooking Terminated...\n");

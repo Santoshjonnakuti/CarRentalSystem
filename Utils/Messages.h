@@ -50,4 +50,9 @@ void printPriceBreakDown(CarBookingDataType CBD)
 {
     printInformation("-------------------------Price Breakdown--------------------------------\nTravel Charges  : " + to_string(CBD.price - 1000) + "\nService Charges : 1000\nTotal Charges   : " + to_string(CBD.price) + "\n");
 }
+void printBookingDetails(char **argv)
+{
+    printInformation("-------------------------Previous Bookings------------------------------\nBooking ID           : " + string(argv[0]) + "\nBooking Car ID       : " + string(argv[1]) + "\nBooking Start Date   : " + string(argv[3]) + "\nBooking Start Time   : " + string(argv[4]) + "\nBooking End Date     : " + string(argv[5]) + "\nBooking End Time     : " + string(argv[6]) + "\nBooking Distance     : " + string(argv[7]) + "\nBooking Price        : " + string(argv[8]) + "\nBooking Status       : " + string(argv[9]) + "\nBooking Pick Address   : " + string(argv[10]));
+    return;
+}
 #endif

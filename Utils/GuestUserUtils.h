@@ -80,7 +80,7 @@ static int getGUCBFilteredCars(void *data, int argc, char **argv, char **azColNa
     printCarDetails(argv);
     return 0;
 }
-void addBooking(CarBookingDataType CBD)
+void GUAddBooking(CarBookingDataType CBD)
 {
     sqlite3 *DB;
     int exit = 0;

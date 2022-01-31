@@ -63,7 +63,7 @@ static int getRUCBFilteredCars(void *data, int argc, char **argv, char **azColNa
     printCarDetails(argv);
     return 0;
 }
-void addBooking(CarBookingDataType CBD)
+void RUAddBooking(CarBookingDataType CBD)
 {
     sqlite3 *DB;
     int exit = 0;
@@ -87,5 +87,10 @@ void addBooking(CarBookingDataType CBD)
     sql = "UPDATE ADMIN SET BOOKING_REQUESTS=BOOKING_REQUESTS + 1 WHERE ID='1';";
     sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
     return;
+}
+static int RUViewPreviousBookings(void *data, int argc, char **argv, char **azColName)
+{
+    printBookingDetails(argv);
+    return 0;
 }
 #endif

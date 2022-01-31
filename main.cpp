@@ -131,6 +131,7 @@ int main()
                     R.registeredUserBookACar(RUD);
                     break;
                 case 2:
+                    R.registeredUserViewPreviousBookings(RUD);
                     break;
                 case 3:
                     break;
