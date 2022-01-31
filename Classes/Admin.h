@@ -250,6 +250,7 @@ public:
         sqlite3 *DB;
         int exit = 0;
         char *sqliteError;
+        string sql;
         exit = sqlite3_open("./Database/DataBase.db", &DB);
         if (exit)
         {
@@ -257,42 +258,71 @@ public:
             return;
         }
         printSuccessMessage("\nDatabase Opened Successfully!\n");
-        string sql = "SELECT * FROM BOOKINGS WHERE BOOKING_STATUS = 'PENDING';";
-        sqlite3_exec(DB, sql.c_str(), adminManageBookings, 0, &sqliteError);
-        for (int j = 0; j < Index; j++)
+        int bookingChoice;
+        string adminCancellationId;
+        cout << "\n1. Manage Pending Bookings\n2. Cancel A Booking\n";
+        cout << "\nEnter Your Choice : ";
+        cin >> bookingChoice;
+        switch (bookingChoice)
         {
-            sql = "UPDATE BOOKINGS SET BOOKING_STATUS='ACCEPTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
-            switch (ChoiceArray[j])
+        case 1:
+            sql = "SELECT * FROM BOOKINGS WHERE BOOKING_STATUS = 'PENDING';";
+            sqlite3_exec(DB, sql.c_str(), adminManageBookings, 0, &sqliteError);
+            if (Index == 0)
             {
-            case 1:
-                exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
-                if (exit == SQLITE_OK)
-                {
-                    printSuccessMessage("\nBooking Accepted Successfully...\n");
-                }
-                else
-                {
-                    cout << sqliteError;
-                    printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
-                }
-                break;
-            case 2:
-                sql = "UPDATE BOOKINGS SET BOOKING_STATUS='REJECTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
-                exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
-                if (exit == SQLITE_OK)
-                {
-                    printSuccessMessage("\nBooking Rejected Successfully...\n");
-                }
-                else
-                {
-                    printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
-                }
-            case 3:
-                printSuccessMessage("\nBooking Status Unchanged...\n");
-            default:
+                printWarningMessage("\nNo Pending Bookings...\n");
                 break;
             }
+            for (int j = 0; j < Index; j++)
+            {
+                sql = "UPDATE BOOKINGS SET BOOKING_STATUS='ACCEPTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
+                switch (ChoiceArray[j])
+                {
+                case 1:
+                    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+                    if (exit == SQLITE_OK)
+                    {
+                        printSuccessMessage("\nBooking Accepted Successfully...\n");
+                    }
+                    else
+                    {
+                        printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
+                    }
+                    break;
+                case 2:
+                    sql = "UPDATE BOOKINGS SET BOOKING_STATUS='REJECTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
+                    exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+                    if (exit == SQLITE_OK)
+                    {
+                        printSuccessMessage("\nBooking Rejected Successfully...\n");
+                    }
+                    else
+                    {
+                        printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
+                    }
+                case 3:
+                    printSuccessMessage("\nBooking Status Unchanged...\n");
+                default:
+                    break;
+                }
+            }
+            break;
+        case 2:
+            cout << "Enter the Booking Id of the Booking : ";
+            cin >> adminCancellationId;
+            sql = "UPDATE BOOKINGS SET BOOKING_STATUS = 'REJECTED' WHERE BOOKING_ID='" + adminCancellationId + "';";
+            exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+            if (exit != SQLITE_OK)
+            {
+                printErrorMessage("\nCannot Cancel the Booking...\nTry Again Later...\n");
+                return;
+            }
+            printSuccessMessage("\nBooking Cancelled Successfully...\n");
+            return;
+        default:
+            break;
         }
+
         sqlite3_close(DB);
     }
 };
