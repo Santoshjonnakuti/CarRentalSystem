@@ -245,6 +245,56 @@ public:
         sqlite3_exec(DB, sql.c_str(), getAllCarsDetails, 0, &sqliteError);
         sqlite3_close(DB);
     }
+    void manageBookings()
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM BOOKINGS WHERE BOOKING_STATUS = 'PENDING';";
+        sqlite3_exec(DB, sql.c_str(), adminManageBookings, 0, &sqliteError);
+        for (int j = 0; j < Index; j++)
+        {
+            sql = "UPDATE BOOKINGS SET BOOKING_STATUS='ACCEPTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
+            switch (ChoiceArray[j])
+            {
+            case 1:
+                exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+                if (exit == SQLITE_OK)
+                {
+                    printSuccessMessage("\nBooking Accepted Successfully...\n");
+                }
+                else
+                {
+                    cout << sqliteError;
+                    printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
+                }
+                break;
+            case 2:
+                sql = "UPDATE BOOKINGS SET BOOKING_STATUS='REJECTED' WHERE BOOKING_ID='" + string(IDArray[j]) + "';";
+                exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
+                if (exit == SQLITE_OK)
+                {
+                    printSuccessMessage("\nBooking Rejected Successfully...\n");
+                }
+                else
+                {
+                    printErrorMessage("\nCannot Update Booking Status...\nTry Again Later...\n");
+                }
+            case 3:
+                printSuccessMessage("\nBooking Status Unchanged...\n");
+            default:
+                break;
+            }
+        }
+        sqlite3_close(DB);
+    }
 };
 
 #endif

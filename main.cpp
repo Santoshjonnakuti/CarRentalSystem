@@ -43,7 +43,7 @@ int main()
             AD.id = LoggedInAdminID;
             while (admin.LoggedIn)
             {
-                cout << "\n1.View Dashboard\n2. Add New Car\n3. Get All Cars\n4. Get Car Details\n5. Update Car Details\n6. Logout\n"
+                cout << "\n1. View Dashboard\n2. Add New Car\n3. Get All Cars\n4. Get Car Details\n5. Update Car Details\n6. Manage Bookings\n7. Logout\n"
                      << endl;
                 cout << "Enter your Choice : ";
                 cin >> admin.choice;
@@ -101,6 +101,9 @@ int main()
                     A.updateCar(updateChoice, to_string(car_id), C);
                     break;
                 case 6:
+                    A.manageBookings();
+                    break;
+                case 7:
                     printSuccessMessage("\nAdmin Logout Successful...\n");
                     admin.LoggedIn = 0;
                     break;
@@ -120,7 +123,7 @@ int main()
             RUD.Data.id = LoggedInRegisteredUserID;
             while (registeredUser.LoggedIn)
             {
-                cout << "\n1.Book a Car\n2.View Previous Bookings\n3.Cancel a Booking\n4.View You Details\n5.Reset Password\n6.Logout\n"
+                cout << "\n1. Book a Car\n2. View Previous Bookings\n3. Cancel a Booking\n4. View You Details\n5. Reset Password\n6. Logout\n"
                      << endl;
                 cout << "\nEnter Your Choice : ";
                 cin >> registeredUser.choice;
@@ -163,7 +166,7 @@ int main()
             GUD.id = LoggedInGuestUserID;
             while (guestUser.LoggedIn)
             {
-                cout << "\n1.Book a Car\n2.View You Details\n3.Logout\n"
+                cout << "\n1. Book a Car\n2. View You Details\n3. Logout\n"
                      << endl;
                 cout << "\nEnter Your Choice : ";
                 cin >> guestUser.choice;

@@ -14,6 +14,9 @@ int adminLoggedIn = 0;
 string AUserName = "", APassword = "";
 string LoggedInAdminID = "";
 AdminDashboardDetailsType ADashboardDetails;
+string IDArray[100];
+int ChoiceArray[100];
+int Index = 0;
 int i = 0;
 
 static int getNoOfCars(void *data, int argc, char **argv, char **azColName)
@@ -66,6 +69,18 @@ static int getAdminDashboardTBA(void *data, int argc, char **argv, char **azColN
 static int getAdminDashboardTBR(void *data, int argc, char **argv, char **azColName)
 {
     ADashboardDetails.totalNoOfBookingsRejected = atoi(argv[0]);
+    return 0;
+}
+static int adminManageBookings(void *data, int argc, char **argv, char **azColName)
+{
+    printBooking(argv);
+    int aMBChoice;
+    cout << "\n1. Accept\n2. Reject\n3. Hold\n";
+    cout << "\nEnter Your Choice : ";
+    cin >> aMBChoice;
+    IDArray[Index] = argv[0];
+    ChoiceArray[Index] = (aMBChoice);
+    Index += 1;
     return 0;
 }
 #endif
