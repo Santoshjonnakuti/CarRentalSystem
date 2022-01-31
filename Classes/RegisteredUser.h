@@ -182,7 +182,7 @@ public:
             cin >> RUCBFD.minMileage;
             cout << "Enter max Price Per KM of Car : ";
             cin >> RUCBFD.maxPricePerKM;
-            sql = "SELECT * FROM CARS WHERE CAPACITY >= '" + RUCBFD.minNumberOfSeats + "' AND MILEAGE >= '" + RUCBFD.minMileage + "' AND PRICEPERKM <= '" + RUCBFD.maxPricePerKM + "';";
+            sql = "SELECT * FROM CARS WHERE CAPACITY >= '" + RUCBFD.minNumberOfSeats + "' AND MILEAGE >= '" + RUCBFD.minMileage + "' AND PRICEPERKM <= '" + RUCBFD.maxPricePerKM + "' AND FUELTYPE = '" + RUCBFD.fuelType + "';";
             exit = sqlite3_exec(DB, sql.c_str(), getRUCBFilteredCars, 0, &sqliteError);
             if (exit != SQLITE_OK)
             {
@@ -211,10 +211,21 @@ public:
         cout << "Enter Car Pick Up Address : ";
         getline(cin, RUCBD.pickUpAddress);
         RUCBD.bookingStatus = "PENDING";
+        RUCBD.isGuest = 0;
         sql = "SELECT PRICEPERKM FROM CARS WHERE ID = '" + RUCBD.carId + "';";
         sqlite3_exec(DB, sql.c_str(), getRUCBookingPrice, 0, &sqliteError);
+        printPriceBreakDown(RUCBD);
+        char RUCBDCountinueBooking;
+        cout << "Continue Booking [Y/N]: ";
+        cin >> RUCBDCountinueBooking;
+        if (RUCBDCountinueBooking == 'Y' || RUCBDCountinueBooking == 'y')
+        {
+            sqlite3_close(DB);
+            addBooking(RUCBD);
+            return;
+        }
+        printErrorMessage("\nBooking Terminated...\n");
         sqlite3_close(DB);
-        addBooking(RUCBD);
     }
 };
 

@@ -46,4 +46,8 @@ void printAdminDashboard(AdminDashboardDetailsType ADDT)
 {
     printInformation("-------------------------Admin Dashboard--------------------------------\nTotal No of Registered Users  : " + to_string(ADDT.noOfRegisteredUsers) + "\nTotal No of Guest Users       : " + to_string(ADDT.noOfGuestUsers) + "\nTotal No of Bookings          : " + to_string(ADDT.totalNoOfBookings) + "\nTotal No of Bookings Accepted : " + to_string(ADDT.totalNoOfBookingsAccepted) + "\nTotal No of Bookings Rejected : " + to_string(ADDT.totalNoOfBookingsRejected) + "\nTotal No of Bookings Pending  : " + to_string(ADDT.totalNoOfBOokingsPending) + "\n");
 }
+void printPriceBreakDown(CarBookingDataType CBD)
+{
+    printInformation("-------------------------Price Breakdown--------------------------------\nTravel Charges  : " + to_string(CBD.price - 1000) + "\nService Charges : 1000\nTotal Charges   : " + to_string(CBD.price) + "\n");
+}
 #endif

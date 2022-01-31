@@ -85,6 +85,7 @@ struct CarBookingDataType
     double price;
     string pickUpAddress;
     string bookingStatus;
+    int isGuest;
 };
 struct CarBookingFilterDataType
 {

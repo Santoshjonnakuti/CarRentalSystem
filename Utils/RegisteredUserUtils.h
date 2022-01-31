@@ -75,7 +75,7 @@ void addBooking(CarBookingDataType CBD)
         return;
     }
     printSuccessMessage("\nDatabase Opened Successfully!\n");
-    string sql = "INSERT INTO BOOKINGS VALUES('" + CBD.bookingId + "', '" + CBD.carId + "', '" + CBD.userId + "', '" + CBD.startDate + "', '" + CBD.startTime + "', '" + CBD.endDate + "', '" + CBD.endTime + "', '" + to_string(CBD.distance) + "', '" + to_string(CBD.price) + "', '" + CBD.bookingStatus + "', '" + CBD.pickUpAddress + "');";
+    string sql = "INSERT INTO BOOKINGS VALUES('" + CBD.bookingId + "', '" + CBD.carId + "', '" + CBD.userId + "', '" + CBD.startDate + "', '" + CBD.startTime + "', '" + CBD.endDate + "', '" + CBD.endTime + "', '" + to_string(CBD.distance) + "', '" + to_string(CBD.price) + "', '" + CBD.bookingStatus + "', '" + CBD.pickUpAddress + "', '" + to_string(CBD.isGuest) + "');";
     exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
     if (exit != SQLITE_OK)
     {

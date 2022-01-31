@@ -89,5 +89,78 @@ public:
         }
         return;
     }
+    void guestUserBookACar(GuestUserDataType GU)
+    {
+        sqlite3 *DB;
+        int exit = 0;
+        char *sqliteError;
+        exit = sqlite3_open("./Database/DataBase.db", &DB);
+        if (exit)
+        {
+            printErrorMessage("\nError Opening Database...\nTry Again Later\n");
+            return;
+        }
+        printSuccessMessage("\nDatabase Opened Successfully!\n");
+        string sql = "SELECT * FROM CARS;";
+        sqlite3_exec(DB, sql.c_str(), getAllCarsDetails, 0, &sqliteError);
+        printSuccessMessage("\nRemember Car Id of the required Car to Book...\n");
+        printWarningMessage("\nDo You Want to Filter Cars According to Your Requirements [Y/N]: ");
+        char isFiltering;
+        cin >> isFiltering;
+        while (isFiltering == 'Y' || isFiltering == 'y')
+        {
+            cout << "Enter min Seating Capacity : ";
+            cin >> GUCBFD.minNumberOfSeats;
+            cout << "Enter fuel Type of the Car [Petrol/Diesel/CNG]: ";
+            cin >> GUCBFD.fuelType;
+            cout << "Enter min Mileage of Car : ";
+            cin >> GUCBFD.minMileage;
+            cout << "Enter max Price Per KM of Car : ";
+            cin >> GUCBFD.maxPricePerKM;
+            sql = "SELECT * FROM CARS WHERE CAPACITY >= '" + GUCBFD.minNumberOfSeats + "' AND MILEAGE >= '" + GUCBFD.minMileage + "' AND PRICEPERKM <= '" + GUCBFD.maxPricePerKM + "' AND FUELTYPE = '" + GUCBFD.fuelType + "';";
+            exit = sqlite3_exec(DB, sql.c_str(), getRUCBFilteredCars, 0, &sqliteError);
+            if (exit != SQLITE_OK)
+            {
+                printErrorMessage("\nUnable to Filter Now...\n");
+                break;
+            }
+            printWarningMessage("\nDo You Want to Filter Again [Y/N]: ");
+            cin >> isFiltering;
+        }
+        GUCBD.userId = GU.id;
+        sql = "SELECT count(BOOKING_ID) FROM BOOKINGS;";
+        sqlite3_exec(DB, sql.c_str(), getRUCBookingId, 0, &sqliteError);
+        cout << "Enter the Card Id : ";
+        cin >> GUCBD.carId;
+        cout << "Enter the Start Date of Booking [DD/MM/YYYY] : ";
+        cin >> GUCBD.startDate;
+        cout << "Enter the Start Time of Bookin [HH:MM] : ";
+        cin >> GUCBD.startTime;
+        cout << "Enter the End Date of Booking [DD/MM/YYYY] : ";
+        cin >> GUCBD.endDate;
+        cout << "Enter the End Time of Booking [HH:MM] : ";
+        cin >> GUCBD.endTime;
+        cout << "Enter the Distance in KM : ";
+        cin >> GUCBD.distance;
+        cin.ignore();
+        cout << "Enter Car Pick Up Address : ";
+        getline(cin, GUCBD.pickUpAddress);
+        GUCBD.bookingStatus = "PENDING";
+        GUCBD.isGuest = 1;
+        sql = "SELECT PRICEPERKM FROM CARS WHERE ID = '" + GUCBD.carId + "';";
+        sqlite3_exec(DB, sql.c_str(), getRUCBookingPrice, 0, &sqliteError);
+        printPriceBreakDown(GUCBD);
+        char GUCBDCountinueBooking;
+        cout << "Continue Booking [Y/N]: ";
+        cin >> GUCBDCountinueBooking;
+        if (GUCBDCountinueBooking == 'Y' || GUCBDCountinueBooking == 'y')
+        {
+            sqlite3_close(DB);
+            addBooking(GUCBD);
+            return;
+        }
+        printErrorMessage("\nBooking Terminated...\n");
+        sqlite3_close(DB);
+    }
 };
 #endif

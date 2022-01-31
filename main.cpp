@@ -168,6 +168,7 @@ int main()
                 switch (guestUser.choice)
                 {
                 case 1:
+                    G.guestUserBookACar(GUD);
                     break;
                 case 2:
                     break;
