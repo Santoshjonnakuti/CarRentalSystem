@@ -45,6 +45,8 @@ static int RUDetails(void *data, int argc, char **argv, char **azColName)
 }
 static int RUResetPassword(void *data, int argc, char **argv, char **azColName)
 {
+    RURPD.sQuestion = "";
+    RURPD.sQAnswer = "";
     RURPD.sQuestion += string(argv[7]);
     RURPD.sQAnswer += string(argv[8]);
     return 0;

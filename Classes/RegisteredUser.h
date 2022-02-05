@@ -129,7 +129,7 @@ public:
         sqlite3_exec(DB, sql.c_str(), RUResetPassword, 0, &sqliteError);
         printInformation("\nAnswer the Below Security Question\nTo Reset Your Password\n");
         string sAns, RURPNewPassword;
-        cout << RURPD.sQuestion;
+        cout << RURPD.sQuestion + " ";
         getline(cin, sAns);
         if (!RURPD.sQAnswer.compare(sAns) == 0)
         {
