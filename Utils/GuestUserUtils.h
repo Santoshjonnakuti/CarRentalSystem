@@ -101,7 +101,7 @@ void GUAddBooking(CarBookingDataType CBD)
         printErrorMessage("\nCannot Book Right Now...\nPlease Try Again Later...\n");
         return;
     }
-    printSuccessMessage("\nBooking Successful...\nBookin Id is " + CBD.bookingId + "\n");
+    printSuccessMessage("\nBooking Successful...\nBooking Id is " + CBD.bookingId + "\n");
     sql = "UPDATE ADMIN SET BOOKING_REQUESTS=BOOKING_REQUESTS + 1 WHERE ID='1';";
     sqlite3_exec(DB, sql.c_str(), NULL, 0, &sqliteError);
     return;
