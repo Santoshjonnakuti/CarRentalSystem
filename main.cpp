@@ -54,10 +54,11 @@ int main()
                     A.adminDashboard();
                     break;
                 case 2:
+                    cin.ignore();
                     cout << "Enter Car Company : ";
-                    cin >> CarDetails.company;
+                    getline(cin, CarDetails.company);
                     cout << "Enter Car Model : ";
-                    cin >> CarDetails.model;
+                    getline(cin, CarDetails.model);
                     cin.ignore();
                     cout << "Enter Car Number : ";
                     getline(cin, CarDetails.number);
