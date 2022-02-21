@@ -4,7 +4,7 @@ OOP Project for 5th Sem
 **Steps to run the Application**
 
 1. Click on the Link Button to download the **sqlite3 Library**. [Link](https://www.sqlite.org/2022/sqlite-amalgamation-3370200.zip)
-2. Extract the Libaray and Plae it int the Project Folder.
+2. Extract the Libaray and Plae it in the Project Folder named as sqlite.
 3. Navigate to the Project Directory and run the following Command to **Compile sqlite3**
 
     `gcc ./sqlite/sqlite3.c ./sqlite/shell.c -o ./sqlite/sqlite3`
